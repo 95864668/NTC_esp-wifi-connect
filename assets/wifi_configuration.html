@@ -1,0 +1,2714 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cấu hình mạng</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="referrer no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style type="text/css">
+        /* ============================================================
+		   2025 UI – GLASS + NEUMORPHIC + RESPONSIVE PHONE / DESKTOP
+		   ------------------------------------------------------------
+		   - data-theme="light" | "dark"
+		   - data-device="auto" | "mobile" | "desktop"
+		   ============================================================ */
+
+		/* ------------------ BIẾN CHUNG (CSS VARIABLES) ------------------ */
+		:root {
+			/* màu cơ bản */
+			--bg-body-light: linear-gradient(140deg, #dde7f6, #ecf1fb, #f9fbff);
+			--bg-body-dark: radial-gradient(circle at top, #020617, #020617 40%, #020617 100%);
+
+			--accent: #3b82f6;
+			--accent-soft: rgba(59, 130, 246, 0.15);
+			--accent-strong: #2563eb;
+
+			--text-main: #111827;
+			--text-muted: #6b7280;
+			--text-soft: #9ca3af;
+
+			--radius-lg: 24px;
+			--radius-md: 14px;
+			--radius-pill: 999px;
+
+			--shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+			--shadow-soft-strong: 0 16px 40px rgba(15, 23, 42, 0.16);
+			--shadow-inset-soft:
+				3px 3px 8px rgba(15, 23, 42, 0.08),
+				-3px -3px 8px rgba(255, 255, 255, 0.8);
+
+			--input-bg-light: #f3f4f6;
+			--input-bg-dark: #020617;
+
+			--max-width-desktop: 960px;
+			--page-padding-top: 64px;
+			--page-padding-top-mobile: 76px;
+
+			--transition-fast: 0.16s ease-out;
+			--transition-normal: 0.25s ease;
+		}
+
+		/* ============================================================
+		   BODY – NỀN, TYPO, MẶC ĐỊNH
+		   ============================================================ */
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+			background: var(--bg-body-light);
+			color: var(--text-main);
+			-webkit-font-smoothing: antialiased;
+			-webkit-tap-highlight-color: transparent;
+			padding-top: var(--page-padding-top);
+		}
+
+		/* Dark theme */
+		body[data-theme="dark"] {
+			background: var(--bg-body-dark);
+			color: #e5e7eb;
+		}
+
+		/* ============================================================
+		   CHẾ ĐỘ GIAO DIỆN PHONE / DESKTOP
+		   ------------------------------------------------------------
+		   data-device="auto"    → responsive bình thường
+		   data-device="mobile"  → ép layout nhỏ, bo sát, font to
+		   data-device="desktop" → ép layout rộng như PC
+		   ============================================================ */
+
+		/* Auto (mặc định) = chỉ dùng @media, không cần CSS riêng */
+		body:not([data-device]) {
+			/* tương đương auto */
+		}
+
+		/* Ép chế độ MOBILE */
+		body[data-device="mobile"] {
+			padding-top: var(--page-padding-top-mobile);
+		}
+
+		body[data-device="mobile"] .container {
+			max-width: 460px;
+			width: 100%;
+			margin: 0 auto 18px;
+			padding: 18px 16px 20px;
+			border-radius: 20px;
+		}
+
+		body[data-device="mobile"] .tabs {
+			max-width: 460px;
+			margin-inline: auto;
+			padding-inline: 6px;
+			gap: 6px;
+		}
+
+		body[data-device="mobile"] .tab {
+			font-size: 13px;
+			padding: 8px 14px;
+		}
+
+		body[data-device="mobile"] input,
+		body[data-device="mobile"] select {
+			font-size: 15px;
+			padding: 12px;
+		}
+
+		body[data-device="mobile"] label {
+			font-size: 14px;
+		}
+
+		/* Ép chế độ DESKTOP */
+		body[data-device="desktop"] {
+			padding-top: var(--page-padding-top);
+		}
+
+		body[data-device="desktop"] .container,
+		body[data-device="desktop"] .tab-content,
+		body[data-device="desktop"] .footer,
+		body[data-device="desktop"] .tabs {
+			max-width: var(--max-width-desktop);
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		/* ============================================================
+		   MOBILE RESPONSIVE TỰ ĐỘNG (data-device="auto" hoặc không đặt)
+		   ============================================================ */
+		@media (max-width: 600px) {
+			body:not([data-device]),
+			body[data-device="auto"] {
+				padding-top: var(--page-padding-top-mobile);
+			}
+
+			body:not([data-device]) .container,
+			body[data-device="auto"] .container {
+				max-width: 460px;
+				margin: 0 10px 16px;
+				padding: 18px 16px 20px;
+				border-radius: 20px;
+			}
+
+			body:not([data-device]) .tab,
+			body[data-device="auto"] .tab {
+				padding: 8px 14px;
+				font-size: 13px;
+			}
+		}
+
+		/* ============================================================
+		   HEADER TRONG MỖI TAB
+		   ============================================================ */
+		.tab-inner-header {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-bottom: 18px;
+		}
+
+		.tab-title {
+			font-size: clamp(18px, 2.1vw, 22px);
+			font-weight: 700;
+			letter-spacing: 0.02em;
+		}
+
+		.tab-subtitle {
+			font-size: 13px;
+			color: var(--text-muted);
+		}
+
+		/* Bước hướng dẫn nhanh */
+		.steps {
+			list-style: none;
+			padding: 0;
+			margin: 8px 0 0;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		.steps li {
+			font-size: 13px;
+			color: var(--text-muted);
+			display: flex;
+			align-items: flex-start;
+			gap: 6px;
+		}
+		.step-index {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 18px;
+			height: 18px;
+			border-radius: 999px;
+			background: var(--accent-soft);
+			color: var(--accent-strong);
+			font-size: 11px;
+			font-weight: 700;
+			flex-shrink: 0;
+			margin-top: 1px;
+		}
+
+		/* Hint / chú thích nhỏ dưới field */
+		.field-hint {
+			margin-top: 4px;
+			font-size: 12px;
+			color: var(--text-soft);
+		}
+
+		/* ============================================================
+		   MAIN CONTAINER – GLASS CARD
+		   ============================================================ */
+		.container {
+			max-width: var(--max-width-desktop);
+			margin: 0 auto 24px;
+			padding: 24px 24px 22px;
+			background: rgba(255, 255, 255, 0.86);
+			backdrop-filter: blur(18px) saturate(180%);
+			border-radius: var(--radius-lg);
+			box-shadow:
+				var(--shadow-soft),
+				0 0 0 1px rgba(255, 255, 255, 0.5);
+			position: relative;
+		}
+
+		/* Dark */
+		body[data-theme="dark"] .container {
+			background: rgba(15, 23, 42, 0.92);
+			box-shadow:
+				var(--shadow-soft-strong),
+				0 0 0 1px rgba(148, 163, 184, 0.35);
+		}
+
+		/* ============================================================
+		   FORM – INPUT, SELECT, SUBMIT
+		   ============================================================ */
+		label {
+			display: block;
+			margin-bottom: 6px;
+			font-weight: 600;
+			color: #374151;
+		}
+
+		body[data-theme="dark"] label {
+			color: #e5e7eb;
+		}
+
+		input,
+		select {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 13px 14px;
+			border: none;
+			border-radius: var(--radius-md);
+			background: var(--input-bg-light);
+			box-shadow: var(--shadow-inset-soft);
+			font-size: 15px;
+			transition: var(--transition-normal);
+			color: var(--text-main);
+		}
+
+		input::placeholder,
+		select::placeholder {
+			color: var(--text-muted);
+		}
+
+		/* Dark input */
+		body[data-theme="dark"] input,
+		body[data-theme="dark"] select {
+			background: var(--input-bg-dark);
+			color: #e5e7eb;
+			box-shadow:
+				3px 3px 8px rgba(0, 0, 0, 0.7),
+				-3px -3px 8px rgba(15, 23, 42, 0.7);
+		}
+
+		body[data-theme="dark"] input::placeholder {
+			color: #6b7280;
+		}
+
+		/* Focus state */
+		input:focus,
+		select:focus {
+			outline: none;
+			transform: translateY(-1px);
+			box-shadow:
+				4px 4px 10px rgba(15, 23, 42, 0.12),
+				-4px -4px 10px rgba(255, 255, 255, 0.9),
+				0 0 0 2px rgba(56, 189, 248, 0.2);
+		}
+
+		/* Submit – gradient nút chính */
+		input[type="submit"] {
+			margin-top: 6px;
+			width: 100%;
+			background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+			color: #ffffff;
+			border-radius: var(--radius-md);
+			padding: 14px 16px;
+			font-size: 16px;
+			font-weight: 600;
+			cursor: pointer;
+			box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+			border: none;
+			transition: var(--transition-normal);
+		}
+
+		input[type="submit"]:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 14px 35px rgba(37, 99, 235, 0.45);
+			filter: brightness(1.03);
+		}
+
+		input[type="submit"]:disabled {
+			background: #cbd5f5;
+			box-shadow: none;
+			cursor: default;
+		}
+
+		/* Dark submit */
+		body[data-theme="dark"] input[type="submit"] {
+			box-shadow: 0 12px 32px rgba(37, 99, 235, 0.55);
+		}
+
+		/* ============================================================
+		   TABS – MODERN PILL NAVIGATION
+		   ============================================================ */
+		.tabs {
+			max-width: var(--max-width-desktop);
+			margin: 20px auto 12px;
+			display: flex;
+			padding: 4px;
+			gap: 6px;
+			border-radius: var(--radius-pill);
+			background: rgba(255, 255, 255, 0.5);
+			backdrop-filter: blur(12px);
+			overflow-x: auto;
+			white-space: nowrap;
+			scrollbar-width: none;
+		}
+
+		.tabs::-webkit-scrollbar {
+			display: none;
+		}
+
+		.tab {
+			padding: 9px 16px;
+			cursor: pointer;
+			border-radius: 999px;
+			background: rgba(241, 245, 249, 0.85);
+			font-weight: 600;
+			font-size: 14px;
+			flex-shrink: 0;
+			border: 1px solid rgba(148, 163, 184, 0.25);
+			color: #111827;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: var(--transition-fast);
+		}
+
+		.tab:hover {
+			background: rgba(226, 232, 240, 0.95);
+		}
+
+		.tab.active {
+			background: #ffffff;
+			color: var(--accent-strong);
+			box-shadow:
+				0 3px 12px rgba(15, 23, 42, 0.1),
+				0 0 0 1px rgba(191, 219, 254, 1);
+		}
+
+		/* Dark tabs */
+		body[data-theme="dark"] .tabs {
+			background: rgba(15, 23, 42, 0.95);
+		}
+
+		body[data-theme="dark"] .tab {
+			background: rgba(15, 23, 42, 0.9);
+			color: #e5e7eb;
+			border-color: rgba(51, 65, 85, 0.9);
+			box-shadow:
+				inset 1px 1px 2px rgba(148, 163, 184, 0.45),
+				inset -1px -1px 3px rgba(0, 0, 0, 0.9);
+		}
+
+		body[data-theme="dark"] .tab.active {
+			background: #020617;
+			color: #60a5fa;
+			box-shadow:
+				0 3px 14px rgba(0, 0, 0, 0.9),
+				0 0 0 1px rgba(37, 99, 235, 0.7);
+		}
+
+		/* Tab content */
+		.tab-content {
+			display: none;
+			max-width: var(--max-width-desktop);
+			margin: 0 auto;
+			animation: fade-slide 0.22s ease-out;
+		}
+
+		.tab-content.active {
+			display: block;
+		}
+
+		@keyframes fade-slide {
+			from {
+				opacity: 0;
+				transform: translateY(8px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* ============================================================
+		   THANH ĐỔI NGÔN NGỮ + THEME – TOP BAR
+		   ============================================================ */
+		.language-switch {
+			position: fixed;
+			top: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: min(var(--max-width-desktop), 100% - 24px);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 8px;
+			z-index: 1000;
+			padding: 6px 10px;
+			border-radius: var(--radius-pill);
+			background: rgba(255, 255, 255, 0.92);
+			backdrop-filter: blur(14px) saturate(180%);
+			box-shadow: 0 6px 20px rgba(15, 23, 42, 0.14);
+		}
+
+		.language-switch-controls {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* Phone / small width */
+		@media (max-width: 600px) {
+			.language-switch {
+				width: 100%;
+				border-radius: 0 0 18px 18px;
+				padding: 8px 14px;
+				justify-content: space-between;
+			}
+		}
+
+		.language-switch select {
+			padding: 6px 10px;
+			font-size: 14px;
+			border-radius: 999px;
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
+			box-shadow:
+				1px 1px 4px rgba(15, 23, 42, 0.08),
+				-1px -1px 4px rgba(255, 255, 255, 0.8);
+		}
+
+		/* Brand pill */
+		.brand-pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 4px 10px;
+			border-radius: 999px;
+			font-size: 12px;
+			font-weight: 600;
+			background: rgba(248, 250, 252, 0.96);
+			border: 1px solid rgba(209, 213, 219, 0.9);
+			color: #111827;
+			white-space: nowrap;
+		}
+		.brand-pill small {
+			font-weight: 500;
+			color: var(--text-soft);
+		}
+		body[data-theme="dark"] .brand-pill {
+			background: rgba(15, 23, 42, 0.98);
+			border-color: #4b5563;
+			color: #e5e7eb;
+		}
+
+		/* Dark top bar */
+		body[data-theme="dark"] .language-switch {
+			background: rgba(15, 23, 42, 0.98);
+			box-shadow: 0 10px 28px rgba(0, 0, 0, 0.9);
+		}
+
+		body[data-theme="dark"] .language-switch select {
+			background: #020617;
+			color: #e5e7eb;
+			border-color: #4b5563;
+			box-shadow:
+				1px 1px 4px rgba(0, 0, 0, 0.7),
+				-1px -1px 3px rgba(15, 23, 42, 0.7);
+		}
+
+		/* Nút đổi theme */
+		.theme-toggle-btn {
+			border-radius: var(--radius-pill);
+			border: 1px solid rgba(148, 163, 184, 0.8);
+			background: rgba(248, 250, 252, 0.96);
+			font-size: 13px;
+			padding: 4px 12px;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			box-shadow:
+				1px 1px 3px rgba(15, 23, 42, 0.08),
+				-1px -1px 3px rgba(255, 255, 255, 0.8);
+		}
+
+		.theme-toggle-btn span {
+			font-size: 11px;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+		}
+
+		.theme-toggle-btn:focus {
+			outline: none;
+			box-shadow:
+				0 0 0 2px rgba(59, 130, 246, 0.25),
+				1px 1px 3px rgba(0, 0, 0, 0.12);
+		}
+
+		/* Dark button */
+		body[data-theme="dark"] .theme-toggle-btn {
+			background: rgba(15, 23, 42, 0.98);
+			border-color: #4b5563;
+			color: #e5e7eb;
+		}
+
+		/* Ghost button (secondary) */
+		.ghost-btn {
+			border-radius: var(--radius-pill);
+			border: 1px solid rgba(148, 163, 184, 0.7);
+			background: rgba(248, 250, 252, 0.96);
+			font-size: 13px;
+			padding: 6px 12px;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.ghost-btn:hover {
+			background: #eef2ff;
+		}
+
+		.ghost-btn-compact {
+			padding-inline: 10px;
+		}
+
+		/* Hàng inline input + nút */
+		.inline-control-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.inline-control-fill {
+			flex: 1;
+		}
+
+		/* ============================================================
+		   BADGE / CHIP
+		   ============================================================ */
+		.badge-soft {
+			display: inline-flex;
+			align-items: center;
+			border-radius: var(--radius-pill);
+			padding: 2px 8px;
+			font-size: 11px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+		}
+
+		.badge-soft-primary {
+			background: var(--accent-soft);
+			color: var(--accent-strong);
+		}
+
+		/* ============================================================
+		   AP LIST – DANH SÁCH WIFI
+		   ============================================================ */
+		#ap_list {
+			margin-top: 18px;
+			border-top: 1px solid #e5e7eb;
+			padding-top: 12px;
+		}
+
+		#ap_list .scanning {
+			font-style: italic;
+			color: var(--text-muted);
+			font-size: 13px;
+		}
+
+		#ap_list p {
+			margin: 6px 0 10px;
+			font-size: 13px;
+			color: var(--text-muted);
+		}
+
+		#ap_list a {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 8px;
+			padding: 11px 13px;
+			background: #ffffff;
+			border-radius: 16px;
+			text-decoration: none;
+			color: #111827;
+			font-weight: 500;
+			box-shadow:
+				0 4px 12px rgba(15, 23, 42, 0.08),
+				inset 0 0 0 1px rgba(243, 244, 246, 0.95);
+			transition: var(--transition-fast);
+		}
+
+		.ap-ssid {
+			max-width: 70%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.ap-meta {
+			font-size: 12px;
+			color: var(--text-muted);
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		#ap_list a:hover {
+			background: #eff6ff;
+			transform: translateY(-2px);
+		}
+
+		#ap_list a.selected {
+			border: 1px solid rgba(37, 99, 235, 0.7);
+			box-shadow:
+				0 4px 14px rgba(37, 99, 235, 0.35),
+				inset 0 0 0 1px rgba(191, 219, 254, 0.9);
+		}
+
+		.wifi-actions {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 10px;
+			margin-bottom: 4px;
+		}
+
+		/* Dark wifi */
+		body[data-theme="dark"] #ap_list {
+			border-top-color: #1f2937;
+		}
+
+		body[data-theme="dark"] #ap_list a {
+			background: #020617;
+			color: #e5e7eb;
+			box-shadow:
+				0 3px 12px rgba(0, 0, 0, 0.78),
+				inset 1px 1px 2px rgba(30, 64, 175, 0.6),
+				inset -1px -1px 3px rgba(0, 0, 0, 0.9);
+		}
+
+		body[data-theme="dark"] #ap_list a:hover {
+			background: #020617;
+			transform: translateY(-1px);
+		}
+
+		body[data-theme="dark"] #ap_list a.selected {
+			border-color: rgba(96, 165, 250, 0.9);
+			box-shadow:
+				0 3px 14px rgba(37, 99, 235, 0.9),
+				inset 0 0 0 1px rgba(30, 64, 175, 0.8);
+		}
+
+		/* ============================================================
+		   PASSWORD + SSID
+		   ============================================================ */
+		.password-wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
+
+		.password-wrapper input {
+			padding-right: 42px;
+		}
+
+		.toggle-password {
+			position: absolute;
+			right: 12px;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			font-size: 16px;
+			opacity: 0.7;
+			color: #4b5563;
+		}
+
+		body[data-theme="dark"] .toggle-password {
+			color: #9ca3af;
+		}
+
+		.toggle-password:focus {
+			outline: none;
+			opacity: 1;
+		}
+
+		.ssid-row {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.ssid-row input {
+			flex: 1;
+		}
+
+		.clear-ssid-btn {
+			border-radius: var(--radius-pill);
+			border: 1px solid rgba(248, 113, 113, 0.6);
+			background: rgba(254, 242, 242, 0.9);
+			font-size: 13px;
+			padding: 6px 10px;
+			cursor: pointer;
+		}
+
+		.clear-ssid-btn:hover {
+			background: #fee2e2;
+		}
+
+		/* ============================================================
+		   SWITCH "SỬ DỤNG MẠNG ẨN" – iOS STYLE
+		   ============================================================ */
+		.hidden-ssid-toggle {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			margin-top: 10px;
+			font-size: 13px;
+			color: var(--text-muted);
+			cursor: pointer;
+			user-select: none;
+		}
+
+		/* Ẩn checkbox nguyên bản nhưng vẫn giữ cho screen reader */
+		.hidden-ssid-toggle input[type="checkbox"] {
+			position: absolute;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		/* Track của switch */
+		.hidden-ssid-switch {
+			position: relative;
+			flex-shrink: 0;
+			width: 40px;
+			height: 22px;
+			border-radius: 999px;
+			background: #e5e7eb;
+			box-shadow:
+				inset 0 1px 2px rgba(148, 163, 184, 0.65),
+				0 1px 2px rgba(148, 163, 184, 0.55);
+			transition: background 0.18s ease-out, box-shadow 0.18s ease-out;
+		}
+
+		/* Nút tròn */
+		.hidden-ssid-knob {
+			position: absolute;
+			top: 2px;
+			left: 2px;
+			width: 18px;
+			height: 18px;
+			border-radius: 999px;
+			background: #ffffff;
+			box-shadow:
+				0 2px 4px rgba(148, 163, 184, 0.9),
+				0 0 0 1px rgba(209, 213, 219, 0.9);
+			transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+		}
+
+		.hidden-ssid-text {
+			line-height: 1.4;
+		}
+
+		/* Trạng thái CHECKED */
+		.hidden-ssid-toggle input[type="checkbox"]:checked + .hidden-ssid-switch {
+			background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+			box-shadow:
+				0 3px 8px rgba(37, 99, 235, 0.6),
+				0 0 0 1px rgba(191, 219, 254, 0.9);
+		}
+
+		.hidden-ssid-toggle input[type="checkbox"]:checked + .hidden-ssid-switch .hidden-ssid-knob {
+			transform: translateX(18px);
+			box-shadow:
+				0 2px 6px rgba(15, 23, 42, 0.7),
+				0 0 0 1px rgba(191, 219, 254, 1);
+		}
+
+		/* Focus bằng bàn phím */
+		.hidden-ssid-toggle input[type="checkbox"]:focus-visible + .hidden-ssid-switch {
+			box-shadow:
+				0 0 0 2px rgba(59, 130, 246, 0.4),
+				0 0 0 1px rgba(191, 219, 254, 1);
+		}
+
+		/* Dark switch */
+		body[data-theme="dark"] .hidden-ssid-switch {
+			background: #020617;
+			box-shadow:
+				inset 0 1px 2px rgba(15, 23, 42, 0.9),
+				0 1px 2px rgba(0, 0, 0, 0.8);
+		}
+
+		body[data-theme="dark"] .hidden-ssid-knob {
+			background: #e5e7eb;
+			box-shadow:
+				0 2px 5px rgba(0, 0, 0, 0.9),
+				0 0 0 1px rgba(30, 64, 175, 0.8);
+		}
+
+		body[data-theme="dark"] .hidden-ssid-toggle {
+			color: #9ca3af;
+		}
+
+		body[data-theme="dark"] .hidden-ssid-toggle input[type="checkbox"]:checked + .hidden-ssid-switch {
+			background: linear-gradient(135deg, #60a5fa, #3b82f6);
+			box-shadow:
+				0 3px 10px rgba(37, 99, 235, 0.8),
+				0 0 0 1px rgba(59, 130, 246, 0.85);
+		}
+
+		body[data-theme="dark"] .hidden-ssid-toggle input[type="checkbox"]:checked + .hidden-ssid-switch .hidden-ssid-knob {
+			box-shadow:
+				0 2px 6px rgba(15, 23, 42, 1),
+				0 0 0 1px rgba(191, 219, 254, 0.95);
+		}
+
+		/* ============================================================
+		   DANH SÁCH WIFI ĐÃ LƯU
+		   ============================================================ */
+		.section-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 4px;
+		}
+		.section-header-title {
+			margin: 0;
+			font-size: 14px;
+			font-weight: 600;
+		}
+		.section-header-caption {
+			margin: 2px 0 0;
+			font-size: 12px;
+			color: var(--text-soft);
+		}
+
+		#saved_list {
+			list-style: none;
+			padding-left: 0;
+			margin: 10px 0 0;
+		}
+
+		#saved_list li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 9px 11px;
+			margin-top: 6px;
+			border-radius: 14px;
+			background: rgba(248, 250, 252, 0.94);
+			box-shadow:
+				0 2px 8px rgba(15, 23, 42, 0.06),
+				inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+			font-size: 14px;
+		}
+
+		.saved-ssid {
+			max-width: 60%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			cursor: pointer;
+		}
+
+		.saved-actions {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.saved-actions button {
+			border-radius: var(--radius-pill);
+			border: 1px solid rgba(148, 163, 184, 0.7);
+			background: rgba(248, 250, 252, 0.96);
+			font-size: 12px;
+			padding: 4px 9px;
+			cursor: pointer;
+		}
+
+		.saved-actions button:hover {
+			background: #fee2e2;
+		}
+
+		/* Dark saved wifi */
+		body[data-theme="dark"] #saved_list li {
+			background: #020617;
+			box-shadow:
+				0 3px 12px rgba(0, 0, 0, 0.85),
+				inset 1px 1px 2px rgba(30, 64, 175, 0.55);
+		}
+
+		/* ============================================================
+		   SECTION / NHÓM NÂNG CAO
+		   ============================================================ */
+		.section-group {
+			margin-top: 18px;
+			padding-top: 10px;
+			border-top: 1px dashed rgba(148, 163, 184, 0.5);
+		}
+
+		.section-label {
+			font-size: 11px;
+			letter-spacing: 0.14em;
+			text-transform: uppercase;
+			color: var(--text-soft);
+			margin-bottom: 8px;
+		}
+
+		/* ============================================================
+		   FEATURE TAGS / CHIPS (SD MUSIC AI)
+		   ============================================================ */
+		.feature-chips {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin-top: 6px;
+		}
+
+		.feature-chip {
+			font-size: 11px;
+			padding: 4px 8px;
+			border-radius: var(--radius-pill);
+			background: rgba(148, 163, 184, 0.08);
+			color: #4b5563;
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			border: 1px solid rgba(148, 163, 184, 0.35);
+		}
+
+		.feature-chip code {
+			font-size: 11px;
+			background: transparent;
+			padding: 0;
+		}
+
+		/* Dark chips */
+		body[data-theme="dark"] .feature-chip {
+			background: rgba(30, 64, 175, 0.18);
+			color: #e5e7eb;
+			border-color: rgba(96, 165, 250, 0.5);
+		}
+
+		/* ============================================================
+		   COLLAPSIBLE BOX (SD MUSIC COMMANDS)
+		   ============================================================ */
+		.collapsible-box {
+			border-radius: 18px;
+			padding: 12px 14px 10px;
+			background: rgba(248, 250, 252, 0.96);
+			box-shadow:
+				0 3px 10px rgba(15, 23, 42, 0.06),
+				inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+			margin-top: 14px;
+		}
+
+		body[data-theme="dark"] .collapsible-box {
+			background: #020617;
+			box-shadow:
+				0 4px 14px rgba(0, 0, 0, 0.9),
+				inset 0 0 0 1px rgba(30, 64, 175, 0.7);
+		}
+
+		.collapsible-header {
+			cursor: pointer;
+			font-weight: 600;
+			padding: 8px 10px;
+			border-radius: 999px;
+			font-size: 13px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+			background: rgba(239, 246, 255, 0.95);
+		}
+
+		.collapsible-header span.label-main {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.collapsible-header span.label-sub {
+			font-size: 11px;
+			color: var(--text-soft);
+		}
+
+		.collapsible-header::before {
+			content: "▾";
+			font-size: 12px;
+			margin-right: 6px;
+			transform: rotate(-90deg);
+			transition: transform 0.18s ease-out;
+		}
+
+		.collapsible-header.open::before {
+			transform: rotate(0deg);
+		}
+
+		body[data-theme="dark"] .collapsible-header {
+			background: rgba(15, 23, 42, 0.98);
+			color: #e5e7eb;
+		}
+
+		.collapsible-content {
+			display: none;
+			margin-top: 10px;
+			padding-top: 8px;
+			border-top: 1px dashed rgba(148, 163, 184, 0.5);
+		}
+
+		/* ============================================================
+		   TOAST – THÔNG BÁO NỔI
+		   ============================================================ */
+		.toast {
+			position: fixed;
+			bottom: 30px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(15, 23, 42, 0.96);
+			color: #f9fafb;
+			padding: 12px 22px;
+			border-radius: 14px;
+			z-index: 1200;
+			opacity: 0;
+			transition: opacity 0.3s ease, transform 0.25s ease-out;
+			font-size: 14px;
+			box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+		}
+
+		.toast.show {
+			opacity: 1;
+			transform: translateX(-50%) translateY(-4px);
+		}
+
+		/* Light toast tone */
+		body[data-theme="light"] .toast {
+			background: rgba(31, 41, 55, 0.96);
+		}
+
+		/* ============================================================
+		   LOADING OVERLAY
+		   ============================================================ */
+		.loading-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background-color: rgba(15, 23, 42, 0.48);
+			z-index: 2000;
+			justify-content: center;
+			align-items: center;
+			backdrop-filter: blur(8px);
+		}
+
+		.loading-overlay.show {
+			display: flex;
+		}
+
+		.loading-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.loading-spinner {
+			width: 56px;
+			height: 56px;
+			border-radius: 999px;
+			border: 5px solid rgba(255, 255, 255, 0.28);
+			border-top-color: #ffffff;
+			animation: spin 1s linear infinite;
+		}
+
+		.loading-text {
+			color: #ffffff;
+			font-size: 15px;
+			font-weight: 600;
+		}
+
+		@keyframes spin {
+			to { transform: rotate(360deg); }
+		}
+
+		/* ============================================================
+		   FOOTER
+		   ============================================================ */
+		.footer {
+			max-width: var(--max-width-desktop);
+			margin: 0 auto 24px;
+			font-size: 12px;
+			color: var(--text-muted);
+			text-align: center;
+			line-height: 1.6;
+		}
+
+		.footer span.footer-highlight {
+			font-weight: 600;
+			color: #111827;
+		}
+
+		body[data-theme="dark"] .footer {
+			color: #9ca3af;
+		}
+
+		body[data-theme="dark"] .footer span.footer-highlight {
+			color: #e5e7eb;
+		}
+    </style>
+</head>
+<body>
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" data-lang="connecting">Đang kết nối...</div>
+        </div>
+    </div>
+    
+    <!-- Language + Theme bar -->
+    <div class="language-switch">
+        <div class="brand-pill">
+            <span>⚙️ Xiaozhi ESP32-S3</span>
+            <small>Cấu hình mạng nhanh</small>
+        </div>
+        <div class="language-switch-controls">
+            <button type="button" id="theme_toggle_btn" class="theme-toggle-btn" aria-label="Đổi giao diện sáng/tối">
+                <span>SÁNG</span> ☀️
+            </button>
+            <select id="language" onchange="changeLanguage()">
+                <option value="ar-SA">العربية</option>
+                <option value="bg-BG">Български</option>
+                <option value="ca-ES">Català</option>
+                <option value="cs-CZ">Čeština</option>
+                <option value="da-DK">Dansk</option>
+                <option value="de-DE">Deutsch</option>
+                <option value="el-GR">Ελληνικά</option>
+                <option value="en-US">English</option>
+                <option value="es-ES">Español</option>
+                <option value="fa-IR">فارسی</option>
+                <option value="fi-FI">Suomi</option>
+                <option value="fil-PH">Filipino</option>
+                <option value="fr-FR">Français</option>
+                <option value="he-IL">עברית</option>
+                <option value="hi-IN">हिन्दी</option>
+                <option value="hr-HR">Hrvatski</option>
+                <option value="hu-HU">Magyar</option>
+                <option value="id-ID">Bahasa Indonesia</option>
+                <option value="it-IT">Italiano</option>
+                <option value="ja-JP">日本語</option>
+                <option value="ko-KR">한국어</option>
+                <option value="ms-MY">Bahasa Melayu</option>
+                <option value="nb-NO">Norsk</option>
+                <option value="nl-NL">Nederlands</option>
+                <option value="pl-PL">Polski</option>
+                <option value="pt-PT">Português</option>
+                <option value="ro-RO">Română</option>
+                <option value="ru-RU">Русский</option>
+                <option value="sk-SK">Slovenčina</option>
+                <option value="sl-SI">Slovenščina</option>
+                <option value="sr-RS">Српски</option>
+                <option value="sv-SE">Svenska</option>
+                <option value="th-TH">ไทย</option>
+                <option value="tr-TR">Türkçe</option>
+                <option value="uk-UA">Українська</option>
+                <option value="vi-VN" selected>Tiếng Việt</option>
+                <option value="zh-CN">简体中文</option>
+                <option value="zh-TW">繁體中文</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('wifi')" data-lang="wifi_tab">Cấu hình Wi-Fi</div>
+        <div class="tab" onclick="switchTab('advanced')" data-lang="advanced_tab">Cài đặt nâng cao</div>
+    </div>
+
+    <!-- Wi-Fi Configuration Tab -->
+    <div id="wifi-tab" class="tab-content active">
+        <div class="container">
+            <div class="tab-inner-header">
+                <div class="tab-title" data-lang="wifi_tab">Cấu hình Wi-Fi</div>
+                <ul class="steps">
+                    <li>
+                        <span class="step-index">1</span>
+                        <span>Chạm vào tên Wi-Fi trong danh sách bên dưới, hoặc bật “Mạng ẩn” để tự nhập SSID.</span>
+                    </li>
+                    <li>
+                        <span class="step-index">2</span>
+                        <span>Nhập mật khẩu (nếu mạng đang bật bảo mật).</span>
+                    </li>
+                    <li>
+                        <span class="step-index">3</span>
+                        <span>Nhấn <b>Kết nối</b> và chờ thiết bị tự kết nối, khởi động lại nếu cần.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Saved Wi-Fi List -->
+            <div id="saved_list_container" style="display: none;">
+                <div class="section-header">
+                    <div>
+                        <h3 data-lang="saved_wifi" class="section-header-title">Wi-Fi đã lưu</h3>
+                        <p class="section-header-caption">Nhấn vào tên Wi-Fi để chọn nhanh, hoặc đặt làm mặc định.</p>
+                    </div>
+                </div>
+                <ul id="saved_list">
+                    <li><span>SSID</span></li>
+                </ul>
+            </div>
+            
+            <!-- New Wi-Fi Connection -->
+            <div style="margin-top: 18px;">
+                <h3 data-lang="new_wifi">Wi-Fi mới</h3>
+                <p class="field-hint">Đây là mạng mà thiết bị sẽ sử dụng để truy cập Internet và các dịch vụ AI.</p>
+                <p class="error" style="color: red; text-align: center;" id="error"></p>
+                <form action="/submit" method="post" onsubmit="submitForm(event)">
+                    <p>
+                        <label for="ssid">Tên Wi-Fi (SSID):</label>
+                        <div class="ssid-row">
+                            <input type="text" id="ssid" name="ssid" required readonly>
+                            <button type="button" id="clear_ssid_btn" class="clear-ssid-btn" title="Xóa SSID hiện tại">✖</button>
+                        </div>
+                        <label class="hidden-ssid-toggle">
+                            <input type="checkbox" id="hidden_ssid_checkbox">
+                            <span class="hidden-ssid-switch">
+                                <span class="hidden-ssid-knob"></span>
+                            </span>
+                            <span class="hidden-ssid-text">Sử dụng mạng ẩn (nhập SSID thủ công)</span>
+                        </label>
+                        <div class="field-hint">Dùng khi tên Wi-Fi không hiển thị trong danh sách quét.</div>
+                    </p>
+                    <p>
+                        <label for="password" data-lang="password">Mật khẩu:</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password">
+                            <button type="button" class="toggle-password" id="toggle_password_btn" aria-label="Hiện mật khẩu">👁</button>
+                        </div>
+                        <div class="field-hint">Mật khẩu sẽ được lưu an toàn trong bộ nhớ của thiết bị.</div>
+                    </p>
+                    <p style="text-align: center; margin-top: 14px;">
+                        <input type="submit" value="Kết nối" id="button" data-lang-value="connect">
+                    </p>
+                </form>
+
+                <div class="wifi-actions">
+                    <button type="button" id="refresh_ap_btn" class="ghost-btn">
+                        🔄 <span>Quét lại Wi-Fi</span>
+                    </button>
+                </div>
+                <div class="field-hint" style="text-align: right;">Danh sách Wi-Fi sẽ tự làm mới sau vài giây.</div>
+
+                <p id="ap_list"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Configuration Tab -->
+    <div id="advanced-tab" class="tab-content">
+        <div class="container">
+            <div class="tab-inner-header">
+                <div class="tab-title" data-lang="advanced_tab">Cài đặt nâng cao</div>
+                <div class="tab-subtitle">
+                    Tinh chỉnh dịch vụ MUSIC/OTA, chân SDMMC và tham số Wi-Fi radio. Nếu không chắc, nên giữ nguyên giá trị mặc định.
+                </div>
+
+                <!-- ============================
+				 SD MUSIC – MCP COMMANDS (COLLAPSIBLE)
+				 ============================ -->
+				<div class="collapsible-box">
+					<div class="collapsible-header" onclick="toggleCollapsible(this)">
+						<span class="label-main">💾 SD MUSIC – Toàn bộ lệnh AI</span>
+						<span class="label-sub">Click để xem nhanh cú pháp MCP dùng với Xiaozhi AI</span>
+					</div>
+
+					<div class="collapsible-content">
+						<!-- SD MUSIC – TAG & LỆNH AI NGẮN GỌN (ĐẦY ĐỦ MCP) -->
+						<div class="feature-chips">
+							<span class="badge-soft badge-soft-primary">SD MUSIC – phát offline từ thẻ nhớ</span>
+
+							<!-- 1) PLAYBACK CƠ BẢN -->
+							<span class="feature-chip">“Phát nhạc từ thẻ nhớ” → <code>self.sdmusic.playback(action="play")</code></span>
+							<span class="feature-chip">“Tạm dừng bài hiện tại” → <code>self.sdmusic.playback(action="pause")</code></span>
+							<span class="feature-chip">“Dừng phát nhạc” → <code>self.sdmusic.playback(action="stop")</code></span>
+							<span class="feature-chip">“Chuyển bài tiếp theo” → <code>self.sdmusic.playback(action="next")</code></span>
+							<span class="feature-chip">“Lùi về bài trước” → <code>self.sdmusic.playback(action="prev")</code></span>
+							<span class="feature-chip">“Tua đến 1 phút 30 giây” → <code>self.sdmusic.playback(action="seek", ms=90000)</code></span>
+
+							<!-- 2) CHẾ ĐỘ PHÁT (SHUFFLE / REPEAT) -->
+							<span class="feature-chip">“Bật phát ngẫu nhiên” → <code>self.sdmusic.mode(action="shuffle", enabled=true)</code></span>
+							<span class="feature-chip">“Tắt phát ngẫu nhiên” → <code>self.sdmusic.mode(action="shuffle", enabled=false)</code></span>
+							<span class="feature-chip">“Lặp lại bài hiện tại” → <code>self.sdmusic.mode(action="repeat", mode="one")</code></span>
+							<span class="feature-chip">“Lặp lại toàn bộ danh sách” → <code>self.sdmusic.mode(action="repeat", mode="all")</code></span>
+							<span class="feature-chip">“Tắt lặp lại” → <code>self.sdmusic.mode(action="repeat", mode="none")</code></span>
+
+							<!-- 3) QUẢN LÝ BÀI HÁT (TRACK) -->
+							<span class="feature-chip">“Phát bài số 10” → <code>self.sdmusic.track(action="set", index=9)</code></span>
+							<span class="feature-chip">“Tên bài hiện tại” → <code>self.sdmusic.track(action="current")</code></span>
+							<span class="feature-chip">“Tổng số bài trong thư viện” → <code>self.sdmusic.track(action="list")</code></span>
+							<span class="feature-chip">“Xem thông tin bài số 3” → <code>self.sdmusic.track(action="info", index=2)</code></span>
+
+							<!-- 4) THƯ MỤC (DIRECTORY) -->
+							<span class="feature-chip">“Phát thư mục &lt;tên thư mục&gt;” → <code>self.sdmusic.directory(action="play", directory="&lt;ten_thu_muc&gt;")</code></span>
+							<span class="feature-chip">“Liệt kê các thư mục nhạc” → <code>self.sdmusic.directory(action="list")</code></span>
+
+							<!-- 5) TÌM KIẾM / PHÁT THEO TÊN (SEARCH) -->
+							<span class="feature-chip">“Tìm bài có chữ ‘love’” → <code>self.sdmusic.search(action="search", keyword="love")</code></span>
+							<span class="feature-chip">“Phát bài &lt;tên bài&gt; trên thẻ nhớ” → <code>self.sdmusic.search(action="play", keyword="&lt;tên bài&gt;")</code></span>
+
+							<!-- 6) THƯ VIỆN / PHÂN TRANG (LIBRARY) -->
+							<span class="feature-chip">“Đếm số bài trong thư mục chill” → <code>self.sdmusic.library(action="count_dir", directory="chill")</code></span>
+							<span class="feature-chip">“Đếm số bài trong thư mục hiện tại” → <code>self.sdmusic.library(action="count_current")</code></span>
+							<span class="feature-chip">“Xem 20 bài đầu tiên” → <code>self.sdmusic.library(action="page", page=1, page_size=20)</code></span>
+
+							<!-- 7) GỢI Ý BÀI HÁT (SUGGEST) -->
+							<span class="feature-chip">“Gợi ý vài bài tiếp theo” → <code>self.sdmusic.suggest(action="next", max_results=5)</code></span>
+							<span class="feature-chip">“Gợi ý các bài giống ‘love’” → <code>self.sdmusic.suggest(action="similar", keyword="love", max_results=5)</code></span>
+
+							<!-- 8) TIẾN ĐỘ PHÁT (PROGRESS) -->
+							<span class="feature-chip">“Tiến độ bài hát hiện tại?” → <code>self.sdmusic.progress()</code></span>
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <form action="/advanced/submit" method="post" onsubmit="submitAdvancedForm(event)">
+                <p class="error" style="color: red; text-align: center;" id="advanced_error"></p>
+
+                <!-- Network services -->
+                <div class="section-group">
+                    <div class="section-label">DỊCH VỤ MẠNG</div>
+                    <p>
+                        <label for="music_url" data-lang="music_url">
+                            Địa chỉ MUSIC tùy chỉnh:
+                            <span id="music_url_badge" class="badge-soft badge-soft-primary" style="display:none;">Đang dùng URL riêng</span>
+                        </label>
+                        <div class="inline-control-row">
+                            <input type="text" id="music_url" name="music_url" class="inline-control-fill">
+                            <button type="button" onclick="clearMusicUrl()" class="ghost-btn ghost-btn-compact" title="Xóa địa chỉ MUSIC tùy chỉnh">❌</button>
+                        </div>
+                        <div class="field-hint">Để trống để sử dụng máy chủ MUSIC mặc định của Xiaozhi.</div>
+                    </p>
+
+                    <p>
+                        <label for="ota_url" data-lang="ota_url">
+                            Địa chỉ OTA tùy chỉnh:
+                            <span id="ota_url_badge" class="badge-soft badge-soft-primary" style="display:none;">Đang dùng OTA riêng</span>
+                        </label>
+                        <div class="inline-control-row">
+                            <input type="text" id="ota_url" name="ota_url" class="inline-control-fill">
+                            <button type="button" onclick="clearOtaUrl()" class="ghost-btn ghost-btn-compact" title="Xóa địa chỉ OTA tùy chỉnh">❌</button>
+                        </div>
+                        <div class="field-hint">Để trống để dùng OTA mặc định hoặc tắt OTA tùy chỉnh.</div>
+                    </p>
+                </div>
+
+                <!-- SDMMC PIN CONFIG -->
+                <div class="section-group">
+                    <div class="section-label">CHÂN SDMMC</div>
+                    <h3 style="margin-top: 2px;">Chọn chân SDMMC cho thẻ nhớ</h3>
+                    <p class="field-hint">Nếu không chắc sơ đồ chân, giữ nguyên cấu hình đã được firmware thiết lập sẵn.</p>
+
+                    <p>
+                        <label for="sd_clk">SDMMC CLK (GPIO):</label>
+                        <input type="number" id="sd_clk" name="sd_clk" placeholder="ví dụ: 36">
+                    </p>
+
+                    <p>
+                        <label for="sd_cmd">SDMMC CMD (GPIO):</label>
+                        <input type="number" id="sd_cmd" name="sd_cmd" placeholder="ví dụ: 35">
+                    </p>
+
+                    <p>
+                        <label for="sd_d0">SDMMC D0 (GPIO):</label>
+                        <input type="number" id="sd_d0" name="sd_d0" placeholder="ví dụ: 37">
+                    </p>
+
+                    <p>
+                        <label for="sd_d3">SDMMC D3 (Detect/NC):</label>
+                        <input type="number" id="sd_d3" name="sd_d3" placeholder="ví dụ: -1 (NC)">
+                    </p>
+                </div>
+                
+                <!-- Wi-Fi radio -->
+                <div class="section-group">
+                    <div class="section-label">WI-FI RADIO</div>
+                    <p class="field-hint">Điều chỉnh cho môi trường thực tế: công suất cao → sóng mạnh hơn nhưng tốn điện hơn.</p>
+
+                    <p style="display: flex; align-items: center; gap: 10px;">
+                        <label for="max_tx_power" data-lang="max_tx_power" style="white-space: nowrap;">Công suất phát Wi-Fi tối đa:</label>
+                        <select id="max_tx_power" name="max_tx_power">
+                            <option value="8">2 dBm</option>
+                            <option value="20">5 dBm</option>
+                            <option value="28">7 dBm</option>
+                            <option value="34">8 dBm</option>
+                            <option value="44">11 dBm</option>
+                            <option value="52">13 dBm</option>
+                            <option value="56">14 dBm</option>
+                            <option value="60">15 dBm</option>
+                            <option value="66">16 dBm</option>
+                            <option value="72">18 dBm</option>
+                            <option value="80">20 dBm</option>
+                        </select>
+                    </p>
+
+                    <p style="display: flex; align-items: center; gap: 10px;">
+                        <label for="remember_bssid" style="margin: 0;">
+                            <span data-lang="remember_bssid">Ghi nhớ BSSID khi kết nối Wi-Fi</span>
+                        </label>
+                        <input type="checkbox" id="remember_bssid" name="remember_bssid">
+                    </p>
+                    <p class="field-hint">Giúp thiết bị bám đúng Access Point, hữu ích khi có nhiều router trùng SSID.</p>
+
+                    <p style="display: flex; align-items: center; gap: 10px;">
+                        <label for="sleep_mode" style="margin: 0;">
+                            <span data-lang="sleep_mode">Bật chế độ ngủ cho Wi-Fi</span>
+                        </label>
+                        <input type="checkbox" id="sleep_mode" name="sleep_mode">
+                    </p>
+                    <p class="field-hint">Giảm tiêu thụ điện khi nhàn rỗi; có thể làm Wi-Fi chậm hơn một chút khi đánh thức.</p>
+                </div>
+					
+                <p style="text-align: center; margin-top: 18px;">
+                    <input type="submit" value="Lưu" id="advanced_button" data-lang-value="save">
+                </p>
+            </form>
+        </div>
+    </div>
+	
+    <!-- Footer / Credit -->
+    <div class="footer">
+        Giao diện cấu hình <span class="footer-highlight">Xiaozhi AI</span> cho ESP32-S3 –
+        phát nhạc đa chức năng từ thẻ nhớ, đổi chân SDMMC trực tiếp trong trang Wi-Fi.
+        <br>
+        UI 2025 tối ưu cho điện thoại &amp; desktop. Phát triển bởi <span class="footer-highlight">Nguyễn Thọ Chung</span>.
+    </div>
+
+    <script type="text/javascript">
+        // ========== Global Variables ==========
+        const button = document.getElementById('button');
+        const error = document.getElementById('error');
+        const ssid = document.getElementById('ssid');
+        const THEME_KEY = 'preferred_theme';
+        let support5G = false; // Store 5G support status
+
+        // ========== Translation Data ==========
+        const translations = {
+            'ar-SA': {
+                title: 'تكوين الشبكة',
+                saved_wifi: 'Wi-Fi المحفوظة',
+                new_wifi: 'Wi-Fi جديد',
+                password: 'كلمة المرور:',
+                connect: 'اتصال',
+                connecting: 'جارٍ الاتصال...',
+                select_wifi: 'حدد Wi-Fi 2.4G من القائمة أدناه:',
+                select_wifi_5g: 'حدد Wi-Fi من القائمة أدناه:',
+                scanning: 'جارٍ المسح...',
+                wifi_tab: 'تكوين Wi-Fi',
+                advanced_tab: 'خيارات متقدمة',
+                ota_url: 'عنوان OTA مخصص:',
+                max_tx_power: 'أقصى قوة إرسال Wi-Fi:',
+                remember_bssid: 'تذكر BSSID عند الاتصال بـ Wi-Fi',
+                sleep_mode: 'تمكين وضع السكون',
+                save: 'حفظ'
+            },
+            'bg-BG': {
+                title: 'Конфигурация на мрежата',
+                saved_wifi: 'Запазени Wi-Fi',
+                new_wifi: 'Нов Wi-Fi',
+                password: 'Парола:',
+                connect: 'Свързване',
+                connecting: 'Свързване...',
+                select_wifi: 'Изберете 2.4G Wi-Fi от списъка по-долу:',
+                select_wifi_5g: 'Изберете Wi-Fi от списъка по-долу:',
+                scanning: 'Сканиране...',
+                wifi_tab: 'Конфигурация на Wi-Fi',
+                advanced_tab: 'Разширени',
+                ota_url: 'Персонализиран OTA URL:',
+                max_tx_power: 'Макс. мощност на предаване Wi-Fi:',
+                remember_bssid: 'Запомни BSSID при свързване към Wi-Fi',
+                sleep_mode: 'Активиране на режим на заспиване',
+                save: 'Запазване'
+            },
+            'ca-ES': {
+                title: 'Configuració de xarxa',
+                saved_wifi: 'Wi-Fi desats',
+                new_wifi: 'Nou Wi-Fi',
+                password: 'Contrasenya:',
+                connect: 'Connectar',
+                connecting: 'Connectant...',
+                select_wifi: 'Selecciona un Wi-Fi 2.4G de la llista següent:',
+                select_wifi_5g: 'Selecciona un Wi-Fi de la llista següent:',
+                scanning: 'Escanejant...',
+                wifi_tab: 'Configuració Wi-Fi',
+                advanced_tab: 'Avançat',
+                ota_url: 'URL OTA personalitzat:',
+                max_tx_power: 'Potència màxima TX Wi-Fi:',
+                remember_bssid: 'Recordar BSSID en connectar a Wi-Fi',
+                sleep_mode: 'Activar mode de suspensió',
+                save: 'Desar'
+            },
+            'cs-CZ': {
+                title: 'Konfigurace sítě',
+                saved_wifi: 'Uložené Wi-Fi',
+                new_wifi: 'Nové Wi-Fi',
+                password: 'Heslo:',
+                connect: 'Připojit',
+                connecting: 'Připojování...',
+                select_wifi: 'Vyberte 2.4G Wi-Fi ze seznamu níže:',
+                select_wifi_5g: 'Vyberte Wi-Fi ze seznamu níže:',
+                scanning: 'Skenování...',
+                wifi_tab: 'Konfigurace Wi-Fi',
+                advanced_tab: 'Pokročilé',
+                ota_url: 'Vlastní OTA URL:',
+                max_tx_power: 'Max. vysílací výkon Wi-Fi:',
+                remember_bssid: 'Pamatovat si BSSID při připojení k Wi-Fi',
+                sleep_mode: 'Povolit režim spánku',
+                save: 'Uložit'
+            },
+            'da-DK': {
+                title: 'Netværkskonfiguration',
+                saved_wifi: 'Gemte Wi-Fi',
+                new_wifi: 'Ny Wi-Fi',
+                password: 'Adgangskode:',
+                connect: 'Forbind',
+                connecting: 'Forbinder...',
+                select_wifi: 'Vælg en 2.4G Wi-Fi fra listen nedenfor:',
+                select_wifi_5g: 'Vælg en Wi-Fi fra listen nedenfor:',
+                scanning: 'Scanner...',
+                wifi_tab: 'Wi-Fi-konfiguration',
+                advanced_tab: 'Avanceret',
+                ota_url: 'Brugerdefineret OTA URL:',
+                max_tx_power: 'Wi-Fi maks. TX-effekt:',
+                remember_bssid: 'Husk BSSID ved forbindelse til Wi-Fi',
+                sleep_mode: 'Aktiver dvaletilstand',
+                save: 'Gem'
+            },
+            'de-DE': {
+                title: 'Netzwerk-Konfiguration',
+                saved_wifi: 'Gespeicherte Wi-Fi-Verbindungen',
+                new_wifi: 'Neue Wi-Fi-Verbindung',
+                password: 'Passwort:',
+                connect: 'Verbinden',
+                connecting: 'Verbindung wird hergestellt...',
+                select_wifi: 'Wähle ein 2.4G Wi-Fi aus der Liste:',
+                select_wifi_5g: 'Wähle ein Wi-Fi aus der Liste:',
+                scanning: 'Scanne...',
+                wifi_tab: 'Wi-Fi-Konfiguration',
+                advanced_tab: 'Erweitert',
+                ota_url: 'Benutzerdefinierte OTA-URL:',
+                max_tx_power: 'Wi-Fi Max. Sendeleistung:',
+                remember_bssid: 'BSSID beim Verbinden mit Wi-Fi merken',
+                sleep_mode: 'Schlafmodus aktivieren',
+                save: 'Speichern'
+            },
+            'el-GR': {
+                title: 'Διαμόρφωση δικτύου',
+                saved_wifi: 'Αποθηκευμένα Wi-Fi',
+                new_wifi: 'Νέο Wi-Fi',
+                password: 'Κωδικός πρόσβασης:',
+                connect: 'Σύνδεση',
+                connecting: 'Σύνδεση...',
+                select_wifi: 'Επιλέξτε ένα 2.4G Wi-Fi από την παρακάτω λίστα:',
+                select_wifi_5g: 'Επιλέξτε ένα Wi-Fi από την παρακάτω λίστα:',
+                scanning: 'Σάρωση...',
+                wifi_tab: 'Διαμόρφωση Wi-Fi',
+                advanced_tab: 'Για προχωρημένους',
+                ota_url: 'Προσαρμοσμένη διεύθυνση OTA:',
+                max_tx_power: 'Μέγιστη ισχύς μετάδοσης Wi-Fi:',
+                remember_bssid: 'Απομνημόνευση BSSID κατά τη σύνδεση σε Wi-Fi',
+                sleep_mode: 'Ενεργοποίηση λειτουργίας αναστολής',
+                save: 'Αποθήκευση'
+            },
+            'en-US': {
+                title: 'Network Configuration',
+                saved_wifi: 'Saved Wi-Fi',
+                new_wifi: 'New Wi-Fi',
+                password: 'Password:',
+                connect: 'Connect',
+                connecting: 'Connecting...',
+                select_wifi: 'Select a 2.4G Wi-Fi from the list below:',
+                select_wifi_5g: 'Select a Wi-Fi from the list below:',
+                scanning: 'Scanning...',
+                wifi_tab: 'Wi-Fi Config',
+                advanced_tab: 'Advanced',
+                music_url: 'Custom MUSIC URL:',
+                ota_url: 'Custom OTA URL:',
+                max_tx_power: 'Wi-Fi Max TX Power:',
+                remember_bssid: 'Remember BSSID when connecting to Wi-Fi',
+                sleep_mode: 'Enable Sleep Mode',
+                save: 'Save',
+                config_saved: 'Configuration saved'
+            },
+            'es-ES': {
+                title: 'Configuración de red',
+                saved_wifi: 'Wi-Fi guardados',
+                new_wifi: 'Nuevo Wi-Fi',
+                password: 'Contraseña:',
+                connect: 'Conectar',
+                connecting: 'Conectando...',
+                select_wifi: 'Seleccione un Wi-Fi 2.4G de la lista a continuación:',
+                select_wifi_5g: 'Seleccione un Wi-Fi de la lista a continuación:',
+                scanning: 'Escaneando...',
+                wifi_tab: 'Configuración Wi-Fi',
+                advanced_tab: 'Avanzado',
+                ota_url: 'URL OTA personalizada:',
+                max_tx_power: 'Potencia máxima TX Wi-Fi:',
+                remember_bssid: 'Recordar BSSID al conectarse a Wi-Fi',
+                sleep_mode: 'Activar modo de suspensión',
+                save: 'Guardar'
+            },
+            'fa-IR': {
+                title: 'پیکربندی شبکه',
+                saved_wifi: 'Wi-Fi ذخیره شده',
+                new_wifi: 'Wi-Fi جدید',
+                password: 'رمز عبور:',
+                connect: 'اتصال',
+                connecting: 'در حال اتصال...',
+                select_wifi: 'یک Wi-Fi 2.4G از لیست زیر انتخاب کنید:',
+                select_wifi_5g: 'یک Wi-Fi از لیست زیر انتخاب کنید:',
+                scanning: 'در حال اسکن...',
+                wifi_tab: 'پیکربندی Wi-Fi',
+                advanced_tab: 'پیشرفته',
+                ota_url: 'آدرس OTA سفارشی:',
+                max_tx_power: 'حداکثر قدرت انتقال Wi-Fi:',
+                remember_bssid: 'به خاطر سپردن BSSID هنگام اتصال به Wi-Fi',
+                sleep_mode: 'فعال کردن حالت خواب',
+                save: 'ذخیره'
+            },
+            'fi-FI': {
+                title: 'Verkon määritys',
+                saved_wifi: 'Tallennetut Wi-Fi',
+                new_wifi: 'Uusi Wi-Fi',
+                password: 'Salasana:',
+                connect: 'Yhdistä',
+                connecting: 'Yhdistetään...',
+                select_wifi: 'Valitse 2.4G Wi-Fi alla olevasta luettelosta:',
+                select_wifi_5g: 'Valitse Wi-Fi alla olevasta luettelosta:',
+                scanning: 'Etsitään...',
+                wifi_tab: 'Wi-Fi-määritys',
+                advanced_tab: 'Lisäasetukset',
+                ota_url: 'Mukautettu OTA-osoite:',
+                max_tx_power: 'Wi-Fi maks. lähetysteho:',
+                remember_bssid: 'Muista BSSID yhdistettäessä Wi-Fi-verkkoon',
+                sleep_mode: 'Ota lepotila käyttöön',
+                save: 'Tallenna'
+            },
+            'fil-PH': {
+                title: 'Pagsasaayos ng Network',
+                saved_wifi: 'Naka-save na Wi-Fi',
+                new_wifi: 'Bagong Wi-Fi',
+                password: 'Password:',
+                connect: 'Kumonekta',
+                connecting: 'Kumukonekta...',
+                select_wifi: 'Pumili ng 2.4G Wi-Fi mula sa listahan sa ibaba:',
+                select_wifi_5g: 'Pumili ng Wi-Fi mula sa listahan sa ibaba:',
+                scanning: 'Nag-scan...',
+                wifi_tab: 'Pagsasaayos ng Wi-Fi',
+                advanced_tab: 'Advanced',
+                music_url: 'Custom MUSIC URL:',
+                ota_url: 'Custom OTA URL:',
+                max_tx_power: 'Wi-Fi Max TX Power:',
+                remember_bssid: 'Tandaan ang BSSID kapag kumokonekta sa Wi-Fi',
+                sleep_mode: 'I-enable ang Sleep Mode',
+                save: 'I-save'
+            },
+            'fr-FR': {
+                title: 'Configuration réseau',
+                saved_wifi: 'Wi-Fi enregistrés',
+                new_wifi: 'Nouveau Wi-Fi',
+                password: 'Mot de passe:',
+                connect: 'Connecter',
+                connecting: 'Connexion en cours...',
+                select_wifi: 'Sélectionnez un Wi-Fi 2.4G dans la liste ci-dessous:',
+                select_wifi_5g: 'Sélectionnez un Wi-Fi dans la liste ci-dessous:',
+                scanning: 'Analyse en cours...',
+                wifi_tab: 'Configuration Wi-Fi',
+                advanced_tab: 'Avancé',
+                ota_url: 'URL OTA personnalisée:',
+                max_tx_power: 'Puissance TX maximale Wi-Fi:',
+                remember_bssid: 'Mémoriser le BSSID lors de la connexion au Wi-Fi',
+                sleep_mode: 'Activer le mode veille',
+                save: 'Enregistrer'
+            },
+            'he-IL': {
+                title: 'הגדרות רשת',
+                saved_wifi: 'Wi-Fi שמורים',
+                new_wifi: 'Wi-Fi חדש',
+                password: 'סיסמה:',
+                connect: 'התחבר',
+                connecting: 'מתחבר...',
+                select_wifi: 'בחר Wi-Fi 2.4G מהרשימה למטה:',
+                select_wifi_5g: 'בחר Wi-Fi מהרשימה למטה:',
+                scanning: 'סורק...',
+                wifi_tab: 'הגדרות Wi-Fi',
+                advanced_tab: 'מתקדם',
+                ota_url: 'כתובת OTA מותאמת אישית:',
+                max_tx_power: 'הספק שידור מקסימלי Wi-Fi:',
+                remember_bssid: 'זכור BSSID בעת התחברות ל-Wi-Fi',
+                sleep_mode: 'הפעל מצב שינה',
+                save: 'שמור'
+            },
+            'hi-IN': {
+                title: 'नेटवर्क कॉन्फ़िगरेशन',
+                saved_wifi: 'सहेजे गए Wi-Fi',
+                new_wifi: 'नया Wi-Fi',
+                password: 'पासवर्ड:',
+                connect: 'कनेक्ट करें',
+                connecting: 'कनेक्ट हो रहा है...',
+                select_wifi: 'नीचे दी गई सूची से 2.4G Wi-Fi चुनें:',
+                select_wifi_5g: 'नीचे दी गई सूची से Wi-Fi चुनें:',
+                scanning: 'स्कैन कर रहा है...',
+                wifi_tab: 'Wi-Fi कॉन्फ़िगरेशन',
+                advanced_tab: 'उन्नत',
+                ota_url: 'कस्टम OTA URL:',
+                max_tx_power: 'Wi-Fi अधिकतम TX पावर:',
+                remember_bssid: 'Wi-Fi से कनेक्ट करते समय BSSID याद रखें',
+                sleep_mode: 'स्लीप मोड सक्षम करें',
+                save: 'सहेजें'
+            },
+            'hr-HR': {
+                title: 'Konfiguracija mreže',
+                saved_wifi: 'Spremljene Wi-Fi mreže',
+                new_wifi: 'Nova Wi-Fi mreža',
+                password: 'Lozinka:',
+                connect: 'Poveži',
+                connecting: 'Povezivanje...',
+                select_wifi: 'Odaberite 2.4G Wi-Fi s popisa ispod:',
+                select_wifi_5g: 'Odaberite Wi-Fi s popisa ispod:',
+                scanning: 'Skeniranje...',
+                wifi_tab: 'Konfiguracija Wi-Fi',
+                advanced_tab: 'Napredno',
+                ota_url: 'Prilagođeni OTA URL:',
+                max_tx_power: 'Wi-Fi maksimalna TX snaga:',
+                remember_bssid: 'Zapamti BSSID pri povezivanju na Wi-Fi',
+                sleep_mode: 'Omogući način spavanja',
+                save: 'Spremi'
+            },
+            'hu-HU': {
+                title: 'Hálózati konfiguráció',
+                saved_wifi: 'Mentett Wi-Fi hálózatok',
+                new_wifi: 'Új Wi-Fi hálózat',
+                password: 'Jelszó:',
+                connect: 'Csatlakozás',
+                connecting: 'Csatlakozás...',
+                select_wifi: 'Válasszon egy 2.4G Wi-Fi hálózatot az alábbi listából:',
+                select_wifi_5g: 'Válasszon egy Wi-Fi hálózatot az alábbi listából:',
+                scanning: 'Keresés...',
+                wifi_tab: 'Wi-Fi konfiguráció',
+                advanced_tab: 'Speciális',
+                ota_url: 'Egyéni OTA URL:',
+                max_tx_power: 'Wi-Fi max. adási teljesítmény:',
+                remember_bssid: 'BSSID megjegyzése Wi-Fi csatlakozáskor',
+                sleep_mode: 'Alvó mód engedélyezése',
+                save: 'Mentés'
+            },
+            'id-ID': {
+                title: 'Konfigurasi Jaringan',
+                saved_wifi: 'Wi-Fi Tersimpan',
+                new_wifi: 'Wi-Fi Baru',
+                password: 'Kata Sandi:',
+                connect: 'Hubungkan',
+                connecting: 'Menghubungkan...',
+                select_wifi: 'Pilih Wi-Fi 2.4G dari daftar di bawah:',
+                select_wifi_5g: 'Pilih Wi-Fi dari daftar di bawah:',
+                scanning: 'Memindai...',
+                wifi_tab: 'Konfigurasi Wi-Fi',
+                advanced_tab: 'Lanjutan',
+                ota_url: 'URL OTA Kustom:',
+                max_tx_power: 'Daya Pancar Maks Wi-Fi:',
+                remember_bssid: 'Ingat BSSID saat menghubungkan ke Wi-Fi',
+                sleep_mode: 'Aktifkan Mode Tidur',
+                save: 'Simpan'
+            },
+            'it-IT': {
+                title: 'Configurazione di rete',
+                saved_wifi: 'Wi-Fi salvate',
+                new_wifi: 'Nuova Wi-Fi',
+                password: 'Password:',
+                connect: 'Connetti',
+                connecting: 'Connessione in corso...',
+                select_wifi: 'Seleziona una Wi-Fi 2.4G dall\'elenco sottostante:',
+                select_wifi_5g: 'Seleziona una Wi-Fi dall\'elenco sottostante:',
+                scanning: 'Scansione in corso...',
+                wifi_tab: 'Configurazione Wi-Fi',
+                advanced_tab: 'Avanzate',
+                ota_url: 'URL OTA personalizzato:',
+                max_tx_power: 'Potenza TX massima Wi-Fi:',
+                remember_bssid: 'Ricorda BSSID durante la connessione al Wi-Fi',
+                sleep_mode: 'Abilita modalità sospensione',
+                save: 'Salva'
+            },
+            'ja-JP': {
+                title: 'ネットワーク設定',
+                saved_wifi: '保存済みのWi-Fi',
+                new_wifi: '新しいWi-Fi',
+                password: 'パスワード:',
+                connect: '接続',
+                connecting: '接続中...',
+                select_wifi: '以下のリストから2.4G Wi-Fiを選択してください:',
+                select_wifi_5g: '以下のリストからWi-Fiを選択してください:',
+                scanning: 'スキャン中...',
+                wifi_tab: 'Wi-Fi設定',
+                advanced_tab: '詳細設定',
+                ota_url: 'カスタムOTA URL:',
+                max_tx_power: 'Wi-Fi最大送信電力:',
+                remember_bssid: 'Wi-Fi接続時にBSSIDを記憶する',
+                sleep_mode: 'スリープモードを有効にする',
+                save: '保存'
+            },
+            'ko-KR': {
+                title: '네트워크 구성',
+                saved_wifi: '저장된 Wi-Fi',
+                new_wifi: '새 Wi-Fi',
+                password: '비밀번호:',
+                connect: '연결',
+                connecting: '연결 중...',
+                select_wifi: '아래 목록에서 2.4G Wi-Fi를 선택하세요:',
+                select_wifi_5g: '아래 목록에서 Wi-Fi를 선택하세요:',
+                scanning: '스캔 중...',
+                wifi_tab: 'Wi-Fi 구성',
+                advanced_tab: '고급',
+                ota_url: '사용자 정의 OTA URL:',
+                max_tx_power: 'Wi-Fi 최대 송신 전력:',
+                remember_bssid: 'Wi-Fi 연결 시 BSSID 기억',
+                sleep_mode: '절전 모드 활성화',
+                save: '저장'
+            },
+            'ms-MY': {
+                title: 'Konfigurasi Rangkaian',
+                saved_wifi: 'Wi-Fi Tersimpan',
+                new_wifi: 'Wi-Fi Baharu',
+                password: 'Kata Laluan:',
+                connect: 'Sambung',
+                connecting: 'Menyambung...',
+                select_wifi: 'Pilih Wi-Fi 2.4G dari senarai di bawah:',
+                select_wifi_5g: 'Pilih Wi-Fi dari senarai di bawah:',
+                scanning: 'Mengimbas...',
+                wifi_tab: 'Konfigurasi Wi-Fi',
+                advanced_tab: 'Lanjutan',
+                ota_url: 'URL OTA Tersuai:',
+                max_tx_power: 'Kuasa TX Maksimum Wi-Fi:',
+                remember_bssid: 'Ingat BSSID semasa menyambung ke Wi-Fi',
+                sleep_mode: 'Dayakan Mod Tidur',
+                save: 'Simpan'
+            },
+            'nb-NO': {
+                title: 'Nettverkskonfigurasjon',
+                saved_wifi: 'Lagrede Wi-Fi',
+                new_wifi: 'Nytt Wi-Fi',
+                password: 'Passord:',
+                connect: 'Koble til',
+                connecting: 'Kobler til...',
+                select_wifi: 'Velg et 2.4G Wi-Fi fra listen nedenfor:',
+                select_wifi_5g: 'Velg et Wi-Fi fra listen nedenfor:',
+                scanning: 'Skanner...',
+                wifi_tab: 'Wi-Fi-konfigurasjon',
+                advanced_tab: 'Avansert',
+                ota_url: 'Egendefinert OTA-URL:',
+                max_tx_power: 'Wi-Fi maks. sendeeffekt:',
+                remember_bssid: 'Husk BSSID ved tilkobling til Wi-Fi',
+                sleep_mode: 'Aktiver hvilemodus',
+                save: 'Lagre'
+            },
+            'nl-NL': {
+                title: 'Netwerkconfiguratie',
+                saved_wifi: 'Opgeslagen Wi-Fi',
+                new_wifi: 'Nieuwe Wi-Fi',
+                password: 'Wachtwoord:',
+                connect: 'Verbinden',
+                connecting: 'Verbinden...',
+                select_wifi: 'Selecteer een 2.4G Wi-Fi uit de onderstaande lijst:',
+                select_wifi_5g: 'Selecteer een Wi-Fi uit de onderstaande lijst:',
+                scanning: 'Scannen...',
+                wifi_tab: 'Wi-Fi-configuratie',
+                advanced_tab: 'Geavanceerd',
+                ota_url: 'Aangepaste OTA-URL:',
+                max_tx_power: 'Wi-Fi max. zendvermogen:',
+                remember_bssid: 'BSSID onthouden bij verbinden met Wi-Fi',
+                sleep_mode: 'Slaapmodus inschakelen',
+                save: 'Opslaan'
+            },
+            'pl-PL': {
+                title: 'Konfiguracja sieci',
+                saved_wifi: 'Zapisane Wi-Fi',
+                new_wifi: 'Nowe Wi-Fi',
+                password: 'Hasło:',
+                connect: 'Połącz',
+                connecting: 'Łączenie...',
+                select_wifi: 'Wybierz Wi-Fi 2.4G z poniższej listy:',
+                select_wifi_5g: 'Wybierz Wi-Fi z poniższej listy:',
+                scanning: 'Skanowanie...',
+                wifi_tab: 'Konfiguracja Wi-Fi',
+                advanced_tab: 'Zaawansowane',
+                ota_url: 'Niestandardowy adres URL OTA:',
+                max_tx_power: 'Maksymalna moc nadawania Wi-Fi:',
+                remember_bssid: 'Zapamiętaj BSSID podczas łączenia z Wi-Fi',
+                sleep_mode: 'Włącz tryb uśpienia',
+                save: 'Zapisz'
+            },
+            'pt-PT': {
+                title: 'Configuração de rede',
+                saved_wifi: 'Wi-Fi guardadas',
+                new_wifi: 'Nova Wi-Fi',
+                password: 'Palavra-passe:',
+                connect: 'Ligar',
+                connecting: 'A ligar...',
+                select_wifi: 'Selecione uma Wi-Fi 2.4G da lista abaixo:',
+                select_wifi_5g: 'Selecione uma Wi-Fi da lista abaixo:',
+                scanning: 'A procurar...',
+                wifi_tab: 'Configuração Wi-Fi',
+                advanced_tab: 'Avançado',
+                ota_url: 'URL OTA personalizado:',
+                max_tx_power: 'Potência TX máxima Wi-Fi:',
+                remember_bssid: 'Lembrar BSSID ao ligar ao Wi-Fi',
+                sleep_mode: 'Ativar modo de suspensão',
+                save: 'Guardar'
+            },
+            'ro-RO': {
+                title: 'Configurare rețea',
+                saved_wifi: 'Wi-Fi salvate',
+                new_wifi: 'Wi-Fi nou',
+                password: 'Parolă:',
+                connect: 'Conectare',
+                connecting: 'Se conectează...',
+                select_wifi: 'Selectați o Wi-Fi 2.4G din lista de mai jos:',
+                select_wifi_5g: 'Selectați o Wi-Fi din lista de mai jos:',
+                scanning: 'Se scanează...',
+                wifi_tab: 'Configurare Wi-Fi',
+                advanced_tab: 'Avansat',
+                ota_url: 'URL OTA personalizat:',
+                max_tx_power: 'Putere maximă TX Wi-Fi:',
+                remember_bssid: 'Reține BSSID la conectarea la Wi-Fi',
+                sleep_mode: 'Activează modul de repaus',
+                save: 'Salvare'
+            },
+            'ru-RU': {
+                title: 'Настройка сети',
+                saved_wifi: 'Сохраненные Wi-Fi',
+                new_wifi: 'Новая Wi-Fi',
+                password: 'Пароль:',
+                connect: 'Подключить',
+                connecting: 'Подключение...',
+                select_wifi: 'Выберите Wi-Fi 2.4G из списка ниже:',
+                select_wifi_5g: 'Выберите Wi-Fi из списка ниже:',
+                scanning: 'Сканирование...',
+                wifi_tab: 'Настройка Wi-Fi',
+                advanced_tab: 'Дополнительно',
+                ota_url: 'Пользовательский URL OTA:',
+                max_tx_power: 'Макс. мощность передачи Wi-Fi:',
+                remember_bssid: 'Запомнить BSSID при подключении к Wi-Fi',
+                sleep_mode: 'Включить режим сна',
+                save: 'Сохранить'
+            },
+            'sk-SK': {
+                title: 'Konfigurácia siete',
+                saved_wifi: 'Uložené Wi-Fi',
+                new_wifi: 'Nové Wi-Fi',
+                password: 'Heslo:',
+                connect: 'Pripojiť',
+                connecting: 'Pripájanie...',
+                select_wifi: 'Vyberte 2.4G Wi-Fi zo zoznamu nižšie:',
+                select_wifi_5g: 'Vyberte Wi-Fi zo zoznamu nižšie:',
+                scanning: 'Skenovanie...',
+                wifi_tab: 'Konfigurácia Wi-Fi',
+                advanced_tab: 'Pokročilé',
+                ota_url: 'Vlastná URL OTA:',
+                max_tx_power: 'Max. vysielací výkon Wi-Fi:',
+                remember_bssid: 'Zapamätať si BSSID pri pripojení k Wi-Fi',
+                sleep_mode: 'Povoliť režim spánku',
+                save: 'Uložiť'
+            },
+            'sl-SI': {
+                title: 'Konfiguracija omrežja',
+                saved_wifi: 'Shranjeni Wi-Fi',
+                new_wifi: 'Nov Wi-Fi',
+                password: 'Geslo:',
+                connect: 'Poveži',
+                connecting: 'Povezovanje...',
+                select_wifi: 'Izberite 2.4G Wi-Fi s spodnjega seznama:',
+                select_wifi_5g: 'Izberite Wi-Fi s spodnjega seznama:',
+                scanning: 'Iskanje...',
+                wifi_tab: 'Konfiguracija Wi-Fi',
+                advanced_tab: 'Napredno',
+                ota_url: 'Prilagojen URL OTA:',
+                max_tx_power: 'Wi-Fi maks. oddajna moč:',
+                remember_bssid: 'Zapomni si BSSID ob povezovanju na Wi-Fi',
+                sleep_mode: 'Omogoči način spanja',
+                save: 'Shrani'
+            },
+            'sr-RS': {
+                title: 'Конфигурација мреже',
+                saved_wifi: 'Сачуване Wi-Fi мреже',
+                new_wifi: 'Нова Wi-Fi мрежа',
+                password: 'Лозинка:',
+                connect: 'Повежи',
+                connecting: 'Повезивање...',
+                select_wifi: 'Изаберите 2.4G Wi-Fi са листе испод:',
+                select_wifi_5g: 'Изаберите Wi-Fi са листе испод:',
+                scanning: 'Скенирање...',
+                wifi_tab: 'Конфигурација Wi-Fi',
+                advanced_tab: 'Напредно',
+                ota_url: 'Прилагођени OTA URL:',
+                max_tx_power: 'Wi-Fi максимална снага преноса:',
+                remember_bssid: 'Запамти BSSID приликом повезивања на Wi-Fi',
+                sleep_mode: 'Омогући режим спавања',
+                save: 'Сачувај'
+            },
+            'sv-SE': {
+                title: 'Nätverkskonfiguration',
+                saved_wifi: 'Sparade Wi-Fi',
+                new_wifi: 'Nytt Wi-Fi',
+                password: 'Lösenord:',
+                connect: 'Anslut',
+                connecting: 'Ansluter...',
+                select_wifi: 'Välj ett 2.4G Wi-Fi från listan nedan:',
+                select_wifi_5g: 'Välj ett Wi-Fi från listan nedan:',
+                scanning: 'Söker...',
+                wifi_tab: 'Wi-Fi-konfiguration',
+                advanced_tab: 'Avancerat',
+                ota_url: 'Anpassad OTA-URL:',
+                max_tx_power: 'Wi-Fi max. sändningseffekt:',
+                remember_bssid: 'Kom ihåg BSSID vid anslutning till Wi-Fi',
+                sleep_mode: 'Aktivera viloläge',
+                save: 'Spara'
+            },
+            'th-TH': {
+                title: 'การกำหนดค่าเครือข่าย',
+                saved_wifi: 'Wi-Fi ที่บันทึกไว้',
+                new_wifi: 'Wi-Fi ใหม่',
+                password: 'รหัสผ่าน:',
+                connect: 'เชื่อมต่อ',
+                connecting: 'กำลังเชื่อมต่อ...',
+                select_wifi: 'เลือก Wi-Fi 2.4G จากรายการด้านล่าง:',
+                select_wifi_5g: 'เลือก Wi-Fi จากรายการด้านล่าง:',
+                scanning: 'กำลังสแกน...',
+                wifi_tab: 'การกำหนดค่า Wi-Fi',
+                advanced_tab: 'ขั้นสูง',
+                ota_url: 'URL OTA กำหนดเอง:',
+                max_tx_power: 'กำลังส่งสูงสุด Wi-Fi:',
+                remember_bssid: 'จำ BSSID เมื่อเชื่อมต่อกับ Wi-Fi',
+                sleep_mode: 'เปิดใช้งานโหมดสลีป',
+                save: 'บันทึก'
+            },
+            'tr-TR': {
+                title: 'Ağ Yapılandırması',
+                saved_wifi: 'Kaydedilmiş Wi-Fi',
+                new_wifi: 'Yeni Wi-Fi',
+                password: 'Şifre:',
+                connect: 'Bağlan',
+                connecting: 'Bağlanıyor...',
+                select_wifi: 'Aşağıdaki listeden bir 2.4G Wi-Fi seçin:',
+                select_wifi_5g: 'Aşağıdaki listeden bir Wi-Fi seçin:',
+                scanning: 'Taranıyor...',
+                wifi_tab: 'Wi-Fi Yapılandırması',
+                advanced_tab: 'Gelişmiş',
+                ota_url: 'Özel OTA URL:',
+                max_tx_power: 'Wi-Fi Maks. İletim Gücü:',
+                remember_bssid: 'Wi-Fi\'ye bağlanırken BSSID\'yi hatırla',
+                sleep_mode: 'Uyku Modunu Etkinleştir',
+                save: 'Kaydet'
+            },
+            'uk-UA': {
+                title: 'Налаштування мережі',
+                saved_wifi: 'Збережені Wi-Fi',
+                new_wifi: 'Нова Wi-Fi',
+                password: 'Пароль:',
+                connect: 'Підключити',
+                connecting: 'Підключення...',
+                select_wifi: 'Виберіть Wi-Fi 2.4G зі списку нижче:',
+                select_wifi_5g: 'Виберіть Wi-Fi зі списку нижче:',
+                scanning: 'Сканування...',
+                wifi_tab: 'Налаштування Wi-Fi',
+                advanced_tab: 'Додатково',
+                ota_url: 'Користувацька URL-адреса OTA:',
+                max_tx_power: 'Макс. потужність передачі Wi-Fi:',
+                remember_bssid: 'Запам\'ятати BSSID при підключенні до Wi-Fi',
+                sleep_mode: 'Увімкнути режим сну',
+                save: 'Зберегти'
+            },
+            'vi-VN': {
+                title: 'Cấu hình mạng',
+                saved_wifi: 'Wi-Fi đã lưu',
+                new_wifi: 'Wi-Fi mới',
+                password: 'Mật khẩu:',
+                connect: 'Kết nối',
+                connecting: 'Đang kết nối...',
+                select_wifi: 'Chọn Wi-Fi 2.4G từ danh sách bên dưới:',
+                select_wifi_5g: 'Chọn Wi-Fi từ danh sách bên dưới:',
+                scanning: 'Đang quét...',
+                wifi_tab: 'Cấu hình Wi-Fi',
+                advanced_tab: 'Cài đặt nâng cao',
+                music_url: 'Địa chỉ MUSIC tùy chỉnh:',
+                ota_url: 'Địa chỉ OTA tùy chỉnh:',
+                max_tx_power: 'Công suất phát Wi-Fi tối đa:',
+                remember_bssid: 'Ghi nhớ BSSID khi kết nối với Wi-Fi',
+                sleep_mode: 'Bật chế độ ngủ cho Wi-Fi',
+                save: 'Lưu',
+                config_saved: 'Đã lưu cấu hình'
+            },
+            'zh-CN': {
+                title: '网络配置',
+                saved_wifi: '已保存的 Wi-Fi',
+                new_wifi: '新的 Wi-Fi',
+                password: '密码:',
+                connect: '连接',
+                connecting: '正在连接...',
+                select_wifi: '从下面列表选择 2.4G Wi-Fi:',
+                select_wifi_5g: '从下面列表选择 Wi-Fi:',
+                scanning: '扫描中...',
+                wifi_tab: 'Wi-Fi 配置',
+                advanced_tab: '高级选项',
+                music_url: '自定义 MUSIC 地址:',
+                ota_url: '自定义 OTA 地址:',
+                max_tx_power: 'Wi-Fi 最大发射功率:',
+                remember_bssid: '连接 Wi-Fi 时记住 BSSID',
+                sleep_mode: '启用睡眠模式',
+                save: '保存'
+            },
+            'zh-TW': {
+                title: '網路設定',
+                saved_wifi: '已儲存的 Wi-Fi',
+                new_wifi: '新的 Wi-Fi',
+                password: '密碼:',
+                connect: '連接',
+                connecting: '正在連接...',
+                select_wifi: '從下方列表選擇 2.4G Wi-Fi:',
+                select_wifi_5g: '從下方列表選擇 Wi-Fi:',
+                scanning: '掃描中...',
+                wifi_tab: 'Wi-Fi 設定',
+                advanced_tab: '進階選項',
+                ota_url: '自定義 OTA 位址:',
+                max_tx_power: 'Wi-Fi 最大發射功率:',
+                remember_bssid: '連接 Wi-Fi 時記住 BSSID',
+                sleep_mode: '啟用睡眠模式',
+                save: '儲存'
+            }
+        };
+
+        // ========== Language Mapping ==========
+        const languageMap = {
+            'ar': 'ar-SA', 'ar-SA': 'ar-SA', 'ar-EG': 'ar-SA', 'ar-AE': 'ar-SA',
+            'bg': 'bg-BG', 'bg-BG': 'bg-BG',
+            'ca': 'ca-ES', 'ca-ES': 'ca-ES',
+            'cs': 'cs-CZ', 'cs-CZ': 'cs-CZ',
+            'da': 'da-DK', 'da-DK': 'da-DK',
+            'de': 'de-DE', 'de-DE': 'de-DE', 'de-AT': 'de-DE', 'de-CH': 'de-DE',
+            'el': 'el-GR', 'el-GR': 'el-GR',
+            'en': 'en-US', 'en-US': 'en-US', 'en-GB': 'en-US', 'en-CA': 'en-US', 'en-AU': 'en-US',
+            'es': 'es-ES', 'es-ES': 'es-ES', 'es-MX': 'es-ES', 'es-AR': 'es-ES',
+            'fa': 'fa-IR', 'fa-IR': 'fa-IR',
+            'fi': 'fi-FI', 'fi-FI': 'fi-FI',
+            'fil': 'fil-PH', 'fil-PH': 'fil-PH', 'tl': 'fil-PH',
+            'fr': 'fr-FR', 'fr-FR': 'fr-FR', 'fr-CA': 'fr-FR', 'fr-BE': 'fr-FR',
+            'he': 'he-IL', 'he-IL': 'he-IL', 'iw': 'he-IL',
+            'hi': 'hi-IN', 'hi-IN': 'hi-IN',
+            'hr': 'hr-HR', 'hr-HR': 'hr-HR',
+            'hu': 'hu-HU', 'hu-HU': 'hu-HU',
+            'id': 'id-ID', 'id-ID': 'id-ID',
+            'it': 'it-IT', 'it-IT': 'it-IT', 'it-CH': 'it-IT',
+            'ja': 'ja-JP', 'ja-JP': 'ja-JP',
+            'ko': 'ko-KR', 'ko-KR': 'ko-KR',
+            'ms': 'ms-MY', 'ms-MY': 'ms-MY',
+            'nb': 'nb-NO', 'nb-NO': 'nb-NO', 'no': 'nb-NO', 'nn': 'nb-NO',
+            'nl': 'nl-NL', 'nl-NL': 'nl-NL', 'nl-BE': 'nl-NL',
+            'pl': 'pl-PL', 'pl-PL': 'pl-PL',
+            'pt': 'pt-PT', 'pt-PT': 'pt-PT', 'pt-BR': 'pt-PT',
+            'ro': 'ro-RO', 'ro-RO': 'ro-RO',
+            'ru': 'ru-RU', 'ru-RU': 'ru-RU',
+            'sk': 'sk-SK', 'sk-SK': 'sk-SK',
+            'sl': 'sl-SI', 'sl-SI': 'sl-SI',
+            'sr': 'sr-RS', 'sr-RS': 'sr-RS',
+            'sv': 'sv-SE', 'sv-SE': 'sv-SE',
+            'th': 'th-TH', 'th-TH': 'th-TH',
+            'tr': 'tr-TR', 'tr-TR': 'tr-TR',
+            'uk': 'uk-UA', 'uk-UA': 'uk-UA',
+            'vi': 'vi-VN', 'vi-VN': 'vi-VN',
+            'zh': 'zh-CN', 'zh-CN': 'zh-CN', 'zh-TW': 'zh-TW', 'zh-HK': 'zh-TW'
+        };
+
+        // ========== Helper Functions ==========
+
+        function getSupportedLanguage(lang) {
+            if (languageMap[lang]) return languageMap[lang];
+            const mainLang = lang.split('-')[0];
+            if (languageMap[mainLang]) return languageMap[mainLang];
+            return 'vi-VN'; // fallback luôn về Tiếng Việt
+        }
+
+        function changeLanguage() {
+            const lang = document.getElementById('language').value;
+            if (!translations[lang]) {
+                console.warn(`Unsupported language: ${lang}, defaulting to Vietnamese`);
+                document.getElementById('language').value = 'vi-VN';
+                return changeLanguage();
+            }
+            document.title = translations[lang].title;
+
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-lang-value]').forEach(element => {
+                const key = element.getAttribute('data-lang-value');
+                if (translations[lang][key]) {
+                    element.value = translations[lang][key];
+                }
+            });
+
+            const apList = document.getElementById('ap_list');
+            if (apList.firstChild) {
+                const selectText = support5G ? translations[lang].select_wifi_5g : translations[lang].select_wifi;
+                apList.firstChild.textContent = selectText;
+            }
+
+            localStorage.setItem('preferred_language', lang);
+        }
+
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            const btn = document.getElementById('theme_toggle_btn');
+            if (!btn) return;
+            if (theme === 'dark') {
+                btn.innerHTML = '<span>TỐI</span> 🌙';
+            } else {
+                btn.innerHTML = '<span>SÁNG</span> ☀️';
+            }
+        }
+
+        function initPasswordToggle() {
+            const input = document.getElementById('password');
+            const btn = document.getElementById('toggle_password_btn');
+            if (!input || !btn) return;
+            btn.addEventListener('click', () => {
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                btn.textContent = isPassword ? '🙈' : '👁';
+            });
+        }
+
+        function initHiddenSsidToggle() {
+            const checkbox = document.getElementById('hidden_ssid_checkbox');
+            const ssidInput = document.getElementById('ssid');
+            const clearBtn = document.getElementById('clear_ssid_btn');
+            if (checkbox && ssidInput) {
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        ssidInput.removeAttribute('readonly');
+                        ssidInput.focus();
+                    } else {
+                        ssidInput.setAttribute('readonly', 'readonly');
+                    }
+                });
+            }
+            if (clearBtn && ssidInput) {
+                clearBtn.addEventListener('click', () => {
+                    ssidInput.value = '';
+                    localStorage.removeItem('last_ssid');
+                    highlightSelectedAp('');
+                });
+            }
+        }
+
+        // Collapsible SD MUSIC box
+        function toggleCollapsible(headerElement) {
+            const content = headerElement.nextElementSibling;
+            if (!content) return;
+            const isOpen = content.style.display === 'block';
+            content.style.display = isOpen ? 'none' : 'block';
+            headerElement.classList.toggle('open', !isOpen);
+        }
+
+        // Highlight AP in list trùng với SSID đang chọn
+        function highlightSelectedAp(targetSsid) {
+            const apList = document.getElementById('ap_list');
+            if (!apList) return;
+            apList.querySelectorAll('a').forEach(link => {
+                link.classList.remove('selected');
+                const nameEl = link.querySelector('.ap-ssid');
+                if (nameEl && targetSsid && nameEl.textContent === targetSsid) {
+                    link.classList.add('selected');
+                }
+            });
+        }
+
+        // ========== Wi-Fi List Management ==========
+
+        function renderSavedList(data) {
+            const savedListContainer = document.getElementById('saved_list_container');
+            const savedList = document.getElementById('saved_list');
+            savedList.innerHTML = '';
+            
+            data.forEach((ssidName, index) => {
+                const li = document.createElement('li');
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'saved-ssid';
+                nameSpan.textContent = ssidName;
+                nameSpan.title = 'Nhấn để chọn Wi-Fi này';
+                nameSpan.addEventListener('click', () => {
+                    ssid.value = ssidName;
+                    localStorage.setItem('last_ssid', ssidName);
+                    highlightSelectedAp(ssidName);
+                });
+
+                const actionsSpan = document.createElement('span');
+                actionsSpan.className = 'saved-actions';
+
+                if (index === 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge-soft badge-soft-primary';
+                    badge.textContent = 'MẶC ĐỊNH';
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.textContent = '❌';
+                    deleteBtn.title = 'Xóa cấu hình Wi-Fi này';
+                    deleteBtn.addEventListener('click', () => deleteItem(deleteBtn, index));
+
+                    actionsSpan.appendChild(badge);
+                    actionsSpan.appendChild(deleteBtn);
+                } else {
+                    const setBtn = document.createElement('button');
+                    setBtn.type = 'button';
+                    setBtn.textContent = '⬆️';
+                    setBtn.title = 'Đặt làm Wi-Fi mặc định';
+                    setBtn.addEventListener('click', () => setDefaultItem(setBtn, index));
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.textContent = '❌';
+                    deleteBtn.title = 'Xóa cấu hình Wi-Fi này';
+                    deleteBtn.addEventListener('click', () => deleteItem(deleteBtn, index));
+
+                    actionsSpan.appendChild(setBtn);
+                    actionsSpan.appendChild(deleteBtn);
+                }
+
+                li.appendChild(nameSpan);
+                li.appendChild(actionsSpan);
+                savedList.appendChild(li);
+            });
+
+            savedListContainer.style.display = data.length > 0 ? 'block' : 'none';
+        }
+
+        function deleteItem(item, index) {
+            item.disabled = true;
+            fetch('/saved/delete?index=' + index)
+                .then(response => response.json())
+                .then(() => {
+                    loadSavedList();
+                });
+        }
+
+        function setDefaultItem(item, index) {
+            item.disabled = true;
+            fetch('/saved/set_default?index=' + index)
+                .then(response => response.json())
+                .then(() => {
+                    loadSavedList();
+                });
+        }
+
+        function loadSavedList() {
+            fetch('/saved/list')
+                .then(response => response.json())
+                .then(data => {
+                    renderSavedList(data);
+                });
+        }
+
+        function loadAPList(forceReset = false) {
+            if (button && button.disabled) {
+                return;
+            }
+
+            const lang = document.getElementById('language').value;
+            const apList = document.getElementById('ap_list');
+
+            const hasExistingAPs = apList.querySelector('a') !== null;
+
+            if (!hasExistingAPs || forceReset) {
+                apList.innerHTML = '<p class="scanning">' + translations[lang].scanning + '</p>';
+            }
+
+            fetch('/scan')
+                .then(response => response.json())
+                .then(data => {
+                    support5G = data.support_5g;
+                    const selectText = support5G ? translations[lang].select_wifi_5g : translations[lang].select_wifi;
+                    apList.innerHTML = '<p>' + selectText + '</p>';
+                    
+                    data.aps.forEach(ap => {
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.innerHTML = `
+                            <span class="ap-ssid">${ap.ssid}</span>
+                            <span class="ap-meta">
+                                <span>${ap.rssi} dBm</span>
+                                <span>${ap.authmode === 0 ? '🌐' : '🔒'}</span>
+                            </span>
+                        `;
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            ssid.value = ap.ssid;
+                            localStorage.setItem('last_ssid', ap.ssid);
+                            highlightSelectedAp(ap.ssid);
+                        });
+
+                        if (ssid.value && ssid.value === ap.ssid) {
+                            link.classList.add('selected');
+                        }
+
+                        apList.appendChild(link);
+                    });
+
+                    setTimeout(loadAPList, 5000);
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    setTimeout(loadAPList, 5000);
+                });
+        }
+
+        // ========== Form Submission ==========
+
+        async function submitForm(event) {
+            event.preventDefault();
+            button.disabled = true;
+            error.textContent = '';
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('show');
+
+            const payload = {
+                ssid: ssid.value,
+                password: document.getElementById('password').value
+            };
+
+            if (payload.ssid) {
+                localStorage.setItem('last_ssid', payload.ssid);
+            }
+
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.error || 'Kết nối thất bại');
+                }
+
+                button.disabled = false;
+                window.location.href = '/done.html';
+            } catch (err) {
+                loadingOverlay.classList.remove('show');
+                error.textContent = err.message;
+                button.disabled = false;
+            }
+        }
+
+        async function submitAdvancedForm(event) {
+            event.preventDefault();
+            const advancedButton = document.getElementById('advanced_button');
+            const advancedError = document.getElementById('advanced_error');
+            advancedButton.disabled = true;
+            advancedError.textContent = '';
+
+            const config = {
+                music_url: document.getElementById('music_url').value,
+                ota_url: document.getElementById('ota_url').value,
+                max_tx_power: parseInt(document.getElementById('max_tx_power').value),
+                remember_bssid: document.getElementById('remember_bssid').checked,
+                sleep_mode: document.getElementById('sleep_mode').checked,
+                sd_clk: parseInt(document.getElementById('sd_clk').value),
+                sd_cmd: parseInt(document.getElementById('sd_cmd').value),
+                sd_d0: parseInt(document.getElementById('sd_d0').value),
+                sd_d3: parseInt(document.getElementById('sd_d3').value)
+            };
+
+            try {
+                const response = await fetch('/advanced/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.error || 'Lưu cấu hình thất bại');
+                }
+
+                advancedButton.disabled = false;
+
+                const lang = document.getElementById('language').value;
+                const msg = translations[lang] && translations[lang].config_saved
+                    ? translations[lang].config_saved
+                    : 'Đã lưu cấu hình';
+                showToast(msg);
+            } catch (err) {
+                advancedError.textContent = err.message;
+                advancedButton.disabled = false;
+            }
+        }
+
+        // ========== UI Functions ==========
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        async function loadAdvancedConfig() {
+            try {
+                const response = await fetch('/advanced/config');
+                const data = await response.json();
+                
+                if (data.music_url) {
+                    const musicInput = document.getElementById('music_url');
+                    const badge = document.getElementById('music_url_badge');
+                    musicInput.value = data.music_url;
+                    if (badge) badge.style.display = 'inline-flex';
+                }
+                if (data.ota_url) {
+                    const otaInput = document.getElementById('ota_url');
+                    const badge = document.getElementById('ota_url_badge');
+                    otaInput.value = data.ota_url;
+                    if (badge) badge.style.display = 'inline-flex';
+                }
+                if (data.max_tx_power) {
+                    document.getElementById('max_tx_power').value = data.max_tx_power;
+                }
+                if (data.remember_bssid !== undefined) {
+                    document.getElementById('remember_bssid').checked = data.remember_bssid;
+                }
+                if (data.sleep_mode !== undefined) {
+                    document.getElementById('sleep_mode').checked = data.sleep_mode;
+                }
+                
+                if (data.sd_clk !== undefined) document.getElementById('sd_clk').value = data.sd_clk;
+                if (data.sd_cmd !== undefined) document.getElementById('sd_cmd').value = data.sd_cmd;
+                if (data.sd_d0 !== undefined) document.getElementById('sd_d0').value = data.sd_d0;
+                if (data.sd_d3 !== undefined) document.getElementById('sd_d3').value = data.sd_d3;
+            } catch (error) {
+                console.error('Error loading advanced config:', error);
+            }
+        }
+
+        function clearMusicUrl() {
+            const input = document.getElementById('music_url');
+            const badge = document.getElementById('music_url_badge');
+            if (input) input.value = '';
+            if (badge) badge.style.display = 'none';
+        }
+
+        function clearOtaUrl() {
+            const input = document.getElementById('ota_url');
+            const badge = document.getElementById('ota_url_badge');
+            if (input) input.value = '';
+            if (badge) badge.style.display = 'none';
+        }
+
+        // ========== Initialization ==========
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            const savedLang =
+                langParam ||
+                localStorage.getItem('preferred_language') ||
+                'vi-VN'; // mặc định Tiếng Việt
+
+            document.getElementById('language').value = savedLang;
+            changeLanguage();
+
+            const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+            applyTheme(savedTheme);
+
+            const themeBtn = document.getElementById('theme_toggle_btn');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const current = document.body.getAttribute('data-theme') || 'light';
+                    applyTheme(current === 'light' ? 'dark' : 'light');
+                });
+            }
+
+            const lastSsid = localStorage.getItem('last_ssid');
+            if (lastSsid && !ssid.value) {
+                ssid.value = lastSsid;
+            }
+
+            ssid.addEventListener('change', () => {
+                if (ssid.value) {
+                    localStorage.setItem('last_ssid', ssid.value);
+                    highlightSelectedAp(ssid.value);
+                }
+            });
+
+            // Badge dynamic update cho MUSIC/OTA URL
+            const musicInput = document.getElementById('music_url');
+            const musicBadge = document.getElementById('music_url_badge');
+            if (musicInput && musicBadge) {
+                musicInput.addEventListener('input', () => {
+                    musicBadge.style.display = musicInput.value.trim() ? 'inline-flex' : 'none';
+                });
+            }
+            const otaInput = document.getElementById('ota_url');
+            const otaBadge = document.getElementById('ota_url_badge');
+            if (otaInput && otaBadge) {
+                otaInput.addEventListener('input', () => {
+                    otaBadge.style.display = otaInput.value.trim() ? 'inline-flex' : 'none';
+                });
+            }
+
+            initPasswordToggle();
+            initHiddenSsidToggle();
+            loadSavedList();
+            loadAPList();
+            loadAdvancedConfig();
+
+            const refreshBtn = document.getElementById('refresh_ap_btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => loadAPList(true));
+            }
+        });
+
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                loadSavedList();
+            }
+        });
+
+        ssid.addEventListener('touchstart', () => {
+            ssid.removeAttribute('readonly');
+            ssid.focus();
+        }, {once: true});
+    </script>
+</body>
+</html>
