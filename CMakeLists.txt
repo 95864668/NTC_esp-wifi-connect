@@ -1,5 +1,6 @@
 idf_component_register(
     SRCS
+        "wifi_manager.cc"
         "wifi_configuration_ap.cc"
         "wifi_station.cc"
         "ssid_manager.cc"
@@ -10,11 +11,9 @@ idf_component_register(
         "assets/wifi_configuration.html"
         "assets/wifi_configuration_done.html"
     REQUIRES
-        "esp_timer"
+    	"esp_timer"
         "esp_http_server"
         "esp_wifi"
         "nvs_flash"
         "json"
-    PRIV_REQUIRES
-        main
 )
