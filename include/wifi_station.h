@@ -40,8 +40,7 @@ public:
     WifiStation(const WifiStation&) = delete;
     WifiStation& operator=(const WifiStation&) = delete;
 
-    // Add a (ssid, password) credential to the persistent store.
-    void AddAuth(const std::string& ssid, const std::string& password);
+    void AddAuth(const std::string &&ssid, const std::string &&password);
     void Start();
     void Stop();
     bool IsConnected();

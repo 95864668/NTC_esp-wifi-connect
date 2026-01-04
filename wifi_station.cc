@@ -50,7 +50,7 @@ WifiStation::~WifiStation() {
     }
 }
 
-void WifiStation::AddAuth(const std::string& ssid, const std::string& password) {
+void WifiStation::AddAuth(const std::string &&ssid, const std::string &&password) {
     auto& ssid_manager = SsidManager::GetInstance();
     ssid_manager.AddSsid(ssid, password);
 }
