@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="zh-CN">
 <head>
-    <title>Khởi động lại thiết bị</title>
+    <title>重启设备</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -213,14 +213,14 @@
         <!-- Message -->
         <div class="message-box">
             <div class="message">
-                Thiết bị sẽ khởi động lại sau
-                <span id="countdown" class="count count-pulse">3</span> giây
+                设备将在
+                <span id="countdown" class="count count-pulse">3</span> 秒后重启
             </div>
             <div class="sub">
-                Vui lòng đợi trong khi hệ thống lưu và áp dụng cấu hình...
+                请稍候，系统正在保存并应用配置...
             </div>
             <div class="hint">
-                Nếu trang không tự đóng, bạn có thể đóng cửa sổ này và chờ thiết bị kết nối lại Wi-Fi.
+                若页面未自动关闭，您可手动关闭此窗口并等待设备重新连接Wi-Fi。
             </div>
         </div>
     </div>
@@ -237,17 +237,17 @@
                 if (count <= 0) {
                     clearInterval(timer);
 
-                    // Gửi lệnh reboot
+                    // 发送重启指令
                     fetch('/reboot', { method: 'POST' })
                         .then(response => {
                             if (response.ok) {
-                                console.log("Đã gửi lệnh khởi động lại");
+                                console.log("已发送重启指令");
                                 window.close();
                             } else {
-                                console.error("Không thể gửi lệnh khởi động lại");
+                                console.error("无法发送重启指令");
                             }
                         })
-                        .catch(error => console.error("Lỗi:", error));
+                        .catch(error => console.error("错误：", error));
                 }
             }, 1000);
         });
