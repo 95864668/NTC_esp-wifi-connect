@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cấu hình mạng NTC</title>
+	<title>NTC网络配置</title>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="referrer no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -1686,21 +1686,21 @@
     </style>
 </head>
 <body>
-    <!-- Toast notification -->
+	<!-- Toast notification -->
     <div class="toast" id="toast"></div>
     
     <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
             <div class="loading-spinner"></div>
-            <div class="loading-text" data-lang="connecting">Đang kết nối...</div>
+            <div class="loading-text" data-lang="connecting">正在连接...</div>
         </div>
     </div>
     
     <!-- Language + Theme bar -->
     <div class="language-switch">
-        <button type="button" id="theme_toggle_btn" class="theme-toggle-btn" aria-label="Đổi giao diện sáng/tối">
-            <span>SÁNG</span> ☀️
+        <button type="button" id="theme_toggle_btn" class="theme-toggle-btn" aria-label="切换亮色/暗色界面">
+            <span>亮色</span> ☀️
         </button>
         <select id="language" onchange="changeLanguage()">
             <option value="ar-SA">العربية</option>
@@ -1738,32 +1738,32 @@
             <option value="th-TH">ไทย</option>
             <option value="tr-TR">Türkçe</option>
             <option value="uk-UA">Українська</option>
-            <option value="vi-VN" selected>Tiếng Việt</option>
-            <option value="zh-CN">简体中文</option>
+            <option value="vi-VN">Tiếng Việt</option>
+            <option value="zh-CN" selected>简体中文</option>
             <option value="zh-TW">繁體中文</option>
         </select>
     </div>
 
     <!-- Tabs -->
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('wifi')" data-lang="wifi_tab">Cấu hình Wi-Fi</div>
-        <div class="tab" onclick="switchTab('advanced')" data-lang="advanced_tab">Cài đặt nâng cao</div>
+        <div class="tab active" onclick="switchTab('wifi')" data-lang="wifi_tab">Wi-Fi配置</div>
+        <div class="tab" onclick="switchTab('advanced')" data-lang="advanced_tab">高级设置</div>
     </div>
 
     <!-- Wi-Fi Configuration Tab -->
     <div id="wifi-tab" class="tab-content active">
         <div class="container">
             <div class="tab-inner-header">
-                <div class="tab-title" data-lang="wifi_tab">Cấu hình Wi-Fi</div>
+                <div class="tab-title" data-lang="wifi_tab">Wi-Fi配置</div>
                 <div class="tab-subtitle">
-                    1) Chọn mạng Wi-Fi bên dưới → 2) Nhập mật khẩu → 3) Nhấn <b>Kết nối</b>.
+                    1) 选择下方的Wi-Fi网络 → 2) 输入密码 → 3) 点击<b>连接</b>。
                 </div>
             </div>
 
             <!-- Saved Wi-Fi List -->
             <div id="saved_list_container" style="display: none;">
                 <div class="section-header">
-                    <h3 data-lang="saved_wifi" style="margin:0;">Wi-Fi đã lưu</h3>
+                    <h3 data-lang="saved_wifi" style="margin:0;">已保存的Wi-Fi</h3>
                 </div>
                 <ul id="saved_list">
                     <li><span>SSID</span></li>
@@ -1772,11 +1772,11 @@
             
             <!-- New Wi-Fi Connection -->
             <div style="margin-top: 18px;">
-                <h3 data-lang="new_wifi">Wi-Fi mới</h3>
+                <h3 data-lang="new_wifi">新增Wi-Fi</h3>
                 <p class="error" style="color: red; text-align: center;" id="error"></p>
                 <form action="/submit" method="post" onsubmit="submitForm(event)">
                     <p>
-                        <label for="ssid">Tên Wi-Fi (SSID):</label>
+                        <label for="ssid">Wi-Fi名称 (SSID):</label>
                         <div class="ssid-row">
                             <input type="text" id="ssid" name="ssid" required readonly>
                             <button type="button" id="clear_ssid_btn" class="clear-ssid-btn">✖</button>
@@ -1788,24 +1788,24 @@
                             <span class="hidden-ssid-switch" aria-hidden="true">
                                 <span class="hidden-ssid-knob"></span>
                             </span>
-                            <span class="hidden-ssid-text">Sử dụng mạng ẩn (nhập SSID thủ công)</span>
+                            <span class="hidden-ssid-text">使用隐藏网络(手动输入SSID)</span>
                         </label>
                     </p>
                     <p>
-                        <label for="password" data-lang="password">Mật khẩu:</label>
+                        <label for="password" data-lang="password">密码:</label>
                         <div class="password-wrapper">
                             <input type="password" id="password" name="password">
-                            <button type="button" class="toggle-password" id="toggle_password_btn" aria-label="Hiện mật khẩu">👁</button>
+                            <button type="button" class="toggle-password" id="toggle_password_btn" aria-label="显示密码">👁</button>
                         </div>
                     </p>
                     <p style="text-align: center; margin-top: 14px;">
-                        <input type="submit" value="Kết nối" id="button" data-lang-value="connect">
+                        <input type="submit" value="连接" id="button" data-lang-value="connect">
                     </p>
                 </form>
 
                 <div class="wifi-actions">
                     <button type="button" id="refresh_ap_btn" class="ghost-btn">
-                        🔄 <span>Quét lại Wi-Fi</span>
+                        🔄 <span>重新扫描Wi-Fi</span>
                     </button>
                 </div>
 
@@ -1818,9 +1818,9 @@
     <div id="advanced-tab" class="tab-content">
         <div class="container">
             <div class="tab-inner-header">
-                <div class="tab-title" data-lang="advanced_tab">Cài đặt nâng cao</div>
+                <div class="tab-title" data-lang="advanced_tab">高级设置</div>
                 <div class="tab-subtitle">
-                    Tinh chỉnh dịch vụ MUSIC/OTA và tham số Wi-Fi.
+                    自定义MUSIC/OTA服务和Wi-Fi参数。
                 </div>
                 
             </div>
@@ -1829,9 +1829,9 @@
 
                 <!-- Network services -->
                 <div class="section-group">
-                    <div class="section-label">DỊCH VỤ MẠNG</div>
+                    <div class="section-label">网络服务</div>
                     <p>
-                        <label for="music_url" data-lang="music_url">Địa chỉ MUSIC tùy chỉnh:</label>
+                        <label for="music_url" data-lang="music_url">自定义MUSIC地址:</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="text" id="music_url" name="music_url" style="flex: 1;">
                             <button type="button" onclick="clearMusicUrl()" class="ghost-btn" style="padding-inline:10px;">❌</button>
@@ -1839,7 +1839,7 @@
                     </p>
 
                     <p>
-                        <label for="ota_url" data-lang="ota_url">Địa chỉ OTA tùy chỉnh:</label>
+                        <label for="ota_url" data-lang="ota_url">自定义OTA地址:</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="text" id="ota_url" name="ota_url" style="flex: 1;">
                             <button type="button" onclick="clearOtaUrl()" class="ghost-btn" style="padding-inline:10px;">❌</button>
@@ -1849,102 +1849,102 @@
 
                 <!-- Weather settings -->
                 <div class="section-group">
-                    <div class="section-label">THỜI TIẾT</div>
+                    <div class="section-label">天气</div>
                     <p>
                         <label for="weather_api_key">OPENWEATHER_API_KEY:</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="text" id="weather_api_key" name="weather_api_key" style="flex: 1;" placeholder="Nhập API key (bắt buộc)">
+                            <input type="text" id="weather_api_key" name="weather_api_key" style="flex: 1;" placeholder="输入API密钥(必填)">
                             <button type="button" onclick="document.getElementById('weather_api_key').value=''" class="ghost-btn" style="padding-inline:10px;">❌</button>
                         </div>
                     </p>
                     <p>
-                        <label for="weather_city">Tên thành phố (tùy chọn):</label>
+                        <label for="weather_city">城市名称(可选):</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="text" id="weather_city" name="weather_city" style="flex: 1;" placeholder="Ví dụ: Tokyo">
+                            <input type="text" id="weather_city" name="weather_city" style="flex: 1;" placeholder="示例: 北京">
                             <button type="button" onclick="document.getElementById('weather_city').value=''" class="ghost-btn" style="padding-inline:10px;">❌</button>
                         </div>
                     </p>
                     <p style="margin-top:-6px; opacity:.75; font-size:.95em;">
-                        Nếu để trống <b>Tên thành phố</b>, firmware sẽ tự lấy vị trí theo IP (ipwhois) để truy vấn thời tiết.
+                        如果<b>城市名称</b>留空，固件将根据IP地址(ipwhois)自动获取位置来查询天气。
                     </p>
                 </div>
 
                 <!-- 
-                    CẤU HÌNH BUS THẺ NHỚ
-                    - Cho phép chọn SDMMC 1-bit / SDMMC 4-bit / SPI.
-                    - Các giá trị được lưu vào NVS (namespace "wifi") qua /advanced/submit.
-                    - Chỉ những field xuất hiện trong JSON mới bị ghi, giúp tránh ghi đè ngoài phạm vi được chọn.
+                    存储卡总线配置
+                    - 允许选择SDMMC 1-bit / SDMMC 4-bit / SPI。
+                    - 值将通过/advanced/submit保存到NVS (namespace "wifi")。
+                    - 仅JSON中出现的字段会被写入，避免覆盖未选择的配置。
                 -->
                 <div class="section-group">
-                    <div class="section-label">THẺ NHỚ / CHẾ ĐỘ BUS</div>
-                    <h3 style="margin-top: 2px;">Chọn chế độ truy cập & chân GPIO</h3>
+                    <div class="section-label">存储卡 / 总线模式</div>
+                    <h3 style="margin-top: 2px;">选择访问模式 & GPIO引脚</h3>
 
-                    <!-- Chế độ bus SD: ánh xạ với sd_mode trong firmware (0/1/2) -->
+                    <!-- SD总线模式: 对应固件中的sd_mode (0/1/2) -->
                     <p>
-                        <label for="sd_mode">Chế độ truy cập thẻ SD:</label>
+                        <label for="sd_mode">SD卡访问模式:</label>
                         <select id="sd_mode" name="sd_mode">
-                            <option value="0">SDMMC 1-bit (tương thích cao)</option>
-                            <option value="1">SDMMC 4-bit (tốc độ cao)</option>
-                            <option value="2">SPI (dùng chung bus SPI)</option>
+                            <option value="0">SDMMC 1-bit (高兼容性)</option>
+                            <option value="1">SDMMC 4-bit (高速)</option>
+                            <option value="2">SPI (共享SPI总线)</option>
                         </select>
                     </p>
 
-                    <!-- Nhóm chân SDMMC: dùng cho cả 1-bit & 4-bit -->
+                    <!-- SDMMC引脚组: 适用于1-bit & 4-bit -->
                     <div id="sdmmc_pins">
                         <p>
                             <label for="sd_clk">SDMMC CLK (GPIO):</label>
-                            <input type="number" id="sd_clk" name="sd_clk" placeholder="ví dụ: 17">
+                            <input type="number" id="sd_clk" name="sd_clk" placeholder="示例: 17">
                         </p>
 
                         <p>
                             <label for="sd_cmd">SDMMC CMD (GPIO):</label>
-                            <input type="number" id="sd_cmd" name="sd_cmd" placeholder="ví dụ: 18">
+                            <input type="number" id="sd_cmd" name="sd_cmd" placeholder="示例: 18">
                         </p>
 
                         <p>
                             <label for="sd_d0">SDMMC D0 (GPIO):</label>
-                            <input type="number" id="sd_d0" name="sd_d0" placeholder="ví dụ: 21">
+                            <input type="number" id="sd_d0" name="sd_d0" placeholder="示例: 21">
                         </p>
 
-                        <!-- Chân chỉ dùng cho 4-bit, nhưng vẫn load/giữ giá trị để không mất config -->
+                        <!-- 仅4-bit使用的引脚，但仍加载/保留值以避免配置丢失 -->
                         <div id="sdmmc_4bit_extra" style="display:none;">
                             <p>
                                 <label for="sd_d1">SDMMC D1 (GPIO):</label>
-                                <input type="number" id="sd_d1" name="sd_d1" placeholder="ví dụ: -1 (không dùng)">
+                                <input type="number" id="sd_d1" name="sd_d1" placeholder="示例: -1 (不使用)">
                             </p>
 
                             <p>
                                 <label for="sd_d2">SDMMC D2 (GPIO):</label>
-                                <input type="number" id="sd_d2" name="sd_d2" placeholder="ví dụ: -1 (không dùng)">
+                                <input type="number" id="sd_d2" name="sd_d2" placeholder="示例: -1 (不使用)">
                             </p>
                         </div>
 
                         <p>
                             <label for="sd_d3">SDMMC D3 (Detect/NC):</label>
-                            <input type="number" id="sd_d3" name="sd_d3" placeholder="ví dụ: 13 hoặc -1 (NC)">
+                            <input type="number" id="sd_d3" name="sd_d3" placeholder="示例: 13 或 -1 (未连接)">
                         </p>
                     </div>
 
-                    <!-- Nhóm chân SPI: chỉ dùng khi sd_mode = 2 -->
+                    <!-- SPI引脚组: 仅sd_mode = 2时使用 -->
                     <div id="spi_pins" style="display:none;">
                         <p>
                             <label for="spi_sck">SPI SCK (GPIO):</label>
-                            <input type="number" id="spi_sck" name="spi_sck" placeholder="ví dụ: 36">
+                            <input type="number" id="spi_sck" name="spi_sck" placeholder="示例: 36">
                         </p>
 
                         <p>
                             <label for="spi_miso">SPI MISO (GPIO):</label>
-                            <input type="number" id="spi_miso" name="spi_miso" placeholder="ví dụ: 37">
+                            <input type="number" id="spi_miso" name="spi_miso" placeholder="示例: 37">
                         </p>
 
                         <p>
                             <label for="spi_mosi">SPI MOSI (GPIO):</label>
-                            <input type="number" id="spi_mosi" name="spi_mosi" placeholder="ví dụ: 35">
+                            <input type="number" id="spi_mosi" name="spi_mosi" placeholder="示例: 35">
                         </p>
 
                         <p>
                             <label for="spi_cs">SPI CS (GPIO):</label>
-                            <input type="number" id="spi_cs" name="spi_cs" placeholder="ví dụ: 34">
+                            <input type="number" id="spi_cs" name="spi_cs" placeholder="示例: 34">
                         </p>
                     </div>
                 </div>
@@ -1954,7 +1954,7 @@
                     <div class="section-label">WI-FI</div>
 
                     <p style="display: flex; align-items: center; gap: 10px;">
-                        <label for="max_tx_power" data-lang="max_tx_power" style="white-space: nowrap;">Công suất phát Wi-Fi tối đa:</label>
+                        <label for="max_tx_power" data-lang="max_tx_power" style="white-space: nowrap;">Wi-Fi最大发射功率:</label>
                         <select id="max_tx_power" name="max_tx_power">
                             <option value="8">2 dBm</option>
                             <option value="20">5 dBm</option>
@@ -1972,21 +1972,21 @@
 
                     <p style="display: flex; align-items: center; gap: 10px;">
                         <label for="remember_bssid" style="margin: 0;">
-                            <span data-lang="remember_bssid">Ghi nhớ BSSID khi kết nối Wi-Fi</span>
+                            <span data-lang="remember_bssid">连接Wi-Fi时记住BSSID</span>
                         </label>
                         <input type="checkbox" id="remember_bssid" name="remember_bssid">
                     </p>
 
                     <p style="display: flex; align-items: center; gap: 10px;">
                         <label for="sleep_mode" style="margin: 0;">
-                            <span data-lang="sleep_mode">Bật chế độ ngủ cho Wi-Fi</span>
+                            <span data-lang="sleep_mode">开启Wi-Fi休眠模式</span>
                         </label>
                         <input type="checkbox" id="sleep_mode" name="sleep_mode">
                     </p>
                 </div>
 					
                 <p style="text-align: center; margin-top: 18px;">
-                    <input type="submit" value="Lưu" id="advanced_button" data-lang-value="save">
+                    <input type="submit" value="保存" id="advanced_button" data-lang-value="save">
                 </p>
             </form>
         </div>
@@ -1994,34 +1994,33 @@
 	
     <!-- Footer / Credit -->
 	<div class="footer">
-		Bản phát triển <span class="footer-highlight">Xiaozhi AI</span> cho ESP32-S3 —
-		tối ưu trải nghiệm nghe nhạc từ thẻ nhớ, hỗ trợ phát nhạc đa chế độ
-		và cho phép đổi chân <b>SDMMC</b> trực tiếp ngay trên trang cấu hình Wi-Fi.
+		由<span class="footer-highlight">小智AI</span>为ESP32-S3开发 —
+		优化存储卡音乐播放体验，支持多模式音乐播放
+		并允许在Wi-Fi配置页面直接修改<b>SDMMC</b>引脚。
 		<br>
 
 		<span>
-			Phiên bản tính năng SD MUSIC/SDMMC:
+			SD MUSIC/SDMMC功能版本:
 			<span class="footer-highlight">v1.0</span>
 			<span style="opacity:.7;">•</span>
-			Phiên bản giao diện:
+			界面版本:
 			<span class="footer-highlight" id="ui_version">2025.2</span>
 			<span style="opacity:.7;">•</span>
-			Firmware:
+			固件版本:
 			<span class="footer-highlight" id="fw_version">v1.0</span>
 		</span>
 		<br>
 
-		Phát triển bởi <span class="footer-highlight">Nguyễn Thọ Chung</span>.
+		由<span class="footer-highlight">Nguyễn Thọ Chung</span>开发。
 		<br>
 
 		<span>
-			Cập nhật bản mới nhất &amp; xem ghi chú phát hành tại
+			获取最新版本 & 查看发行说明请访问
 			<a href="https://github.com/NTC95-Xiaozhi-Esp32" target="_blank" rel="noopener">
 				<span class="footer-highlight">NTC95-Xiaozhi-Esp32</span>
 			</a>
 		</span>
 	</div>
-
 
     <script type="text/javascript">
         /* ============================================================
@@ -2849,14 +2848,14 @@
             if (languageMap[lang]) return languageMap[lang];
             const mainLang = lang.split('-')[0];
             if (languageMap[mainLang]) return languageMap[mainLang];
-            return 'vi-VN'; // fallback luôn về Tiếng Việt
+            return 'zh-CN'; // 回退到简体中文
         }
 
         function changeLanguage() {
             const lang = document.getElementById('language').value;
             if (!translations[lang]) {
-                console.warn(`Unsupported language: ${lang}, defaulting to Vietnamese`);
-                document.getElementById('language').value = 'vi-VN';
+                console.warn(`Unsupported language: ${lang}, defaulting to Chinese`);
+                document.getElementById('language').value = 'zh-CN';
                 return changeLanguage();
             }
             document.title = translations[lang].title;
@@ -2890,9 +2889,9 @@
             const btn = document.getElementById('theme_toggle_btn');
             if (!btn) return;
             if (theme === 'dark') {
-                btn.innerHTML = '<span>TỐI</span> 🌙';
+                btn.innerHTML = '<span>夜间</span> 🌙';
             } else {
-                btn.innerHTML = '<span>SÁNG</span> ☀️';
+                btn.innerHTML = '<span>日间</span> ☀️';
             }
         }
 
@@ -2940,7 +2939,7 @@
                 const li = document.createElement('li');
                 let html = `<span class="saved-ssid">${ssidName}</span><span class="saved-actions">`;
                 if (index === 0) {
-                    html += `<span class="badge-soft badge-soft-primary">MẶC ĐỊNH</span>`;
+                    html += `<span class="badge-soft badge-soft-primary">默认</span>`;
                     html += `<button type="button" onclick="deleteItem(this, ${index})">❌</button>`;
                 } else {
                     html += `<button type="button" onclick="setDefaultItem(this, ${index})">⬆️</button>`;
@@ -3040,7 +3039,7 @@
             const lang = document.getElementById('language').value;
 
             if (window.UIX && typeof UIX.setLoading === "function") {
-                UIX.setLoading(button, true, translations[lang]?.connecting || "Đang kết nối...");
+                UIX.setLoading(button, true, translations[lang]?.connecting || "正在连接...");
             }
 
             button.disabled = true;
@@ -3068,7 +3067,7 @@
 
                 const data = await response.json();
                 if (!data.success) {
-                    throw new Error(data.error || 'Kết nối thất bại');
+                    throw new Error(data.error || '连接失败');
                 }
 
                 // success
@@ -3088,9 +3087,9 @@
         }
 
         /*
-         * Gửi cấu hình nâng cao (MUSIC/OTA/Wi-Fi + bus thẻ SD) xuống /advanced/submit.
-         * Chỉ những field xuất hiện trong object config mới được backend ghi vào NVS,
-         * nên ở đây ta chủ động chọn field theo đúng chế độ bus mà người dùng đang chọn.
+         * 将高级配置（MUSIC/OTA/Wi-Fi + SD卡总线）提交到 /advanced/submit。
+         * 只有出现在config对象中的字段才会被后端写入NVS，
+         * 因此这里根据用户当前选择的总线模式主动筛选字段。
          */
         async function submitAdvancedForm(event) {
             event.preventDefault();
@@ -3101,12 +3100,12 @@
             const lang = document.getElementById('language').value;
 
             if (window.UIX && typeof UIX.setLoading === "function") {
-                UIX.setLoading(advancedButton, true, translations[lang]?.save || "Lưu...");
+                UIX.setLoading(advancedButton, true, translations[lang]?.save || "保存中...");
             }
 
             advancedButton.disabled = true;
 
-            // Cấu hình chung (luôn được xem là "mục người dùng chọn" trong tab nâng cao)
+            // 通用配置（始终视为高级标签页中"用户选择的项"）
             const config = {
                 music_url: document.getElementById('music_url').value,
                 ota_url: document.getElementById('ota_url').value,
@@ -3117,8 +3116,8 @@
                 weather_city: (document.getElementById('weather_city').value || '').trim()
             };
 
-            // Helper: chỉ thêm field số khi người dùng có nhập và giá trị hợp lệ,
-            // tránh gửi NaN xuống backend (NVS).
+            // 辅助函数：仅当用户输入有效数值时才添加数字字段，
+            // 避免向后端发送NaN（NVS）。
             function addIntIfValid(inputId, key) {
                 const el = document.getElementById(inputId);
                 if (!el) return;
@@ -3130,7 +3129,7 @@
                 }
             }
 
-            // Lấy chế độ bus hiện tại (0: 1-bit, 1: 4-bit, 2: SPI)
+            // 获取当前总线模式（0: 1-bit, 1: 4-bit, 2: SPI）
             const sdModeEl = document.getElementById('sd_mode');
             let sdMode = 0;
             if (sdModeEl) {
@@ -3140,8 +3139,8 @@
                 }
             }
 
-            // Theo chế độ bus, chỉ gửi các chân liên quan để đúng yêu cầu
-            // "chỉ ghi và sửa những mục (entries) mà người dùng chọn".
+            // 根据总线模式，仅发送相关引脚以符合
+            // "仅写入和修改用户选择的项（entries）"的要求。
             if (sdMode === 0) {
                 // SDMMC 1-bit → CLK, CMD, D0, D3 (detect/NC)
                 addIntIfValid('sd_clk', 'sd_clk');
@@ -3175,7 +3174,7 @@
 
                 const data = await response.json();
                 if (!data.success) {
-                    throw new Error(data.error || 'Lưu cấu hình thất bại');
+                    throw new Error(data.error || '保存配置失败');
                 }
 
                 advancedButton.disabled = false;
@@ -3186,7 +3185,7 @@
 
                 const msg = translations[lang] && translations[lang].config_saved
                     ? translations[lang].config_saved
-                    : 'Đã lưu cấu hình';
+                    : '已保存配置';
                 showToast(msg);
             } catch (err) {
                 advancedError.textContent = err.message;
@@ -3221,9 +3220,9 @@
         }
 
         /*
-         * Load cấu hình nâng cao từ /advanced/config và đổ vào form.
-         * Backend đã trả sd_mode + đủ chân SDMMC/SPI, nên ta bind hết,
-         * sau đó gọi updateSdModeUi() để hiển thị đúng nhóm chân theo mode.
+         * 从 /advanced/config 加载高级配置并填充到表单。
+         * 后端已返回 sd_mode + 完整的SDMMC/SPI引脚，因此全部绑定，
+         * 然后调用 updateSdModeUi() 以根据模式显示正确的引脚组。
          */
         async function loadAdvancedConfig() {
             try {
@@ -3252,7 +3251,7 @@
                     document.getElementById('weather_city').value = data.weather_city;
                 }
 
-                // sd_mode: nếu không có trong NVS thì mặc định 0 (1-bit)
+                // sd_mode: 如果NVS中不存在则默认为0（1-bit）
                 const sdModeEl = document.getElementById('sd_mode');
                 if (sdModeEl) {
                     if (data.sd_mode !== undefined) {
@@ -3276,18 +3275,18 @@
                 if (data.spi_mosi !== undefined) document.getElementById('spi_mosi').value = data.spi_mosi;
                 if (data.spi_cs   !== undefined) document.getElementById('spi_cs').value   = data.spi_cs;
 
-                // Cập nhật UI hiển thị nhóm chân theo mode hiện tại
+                // 根据当前模式更新引脚组显示UI
                 updateSdModeUi();
             } catch (error) {
-                console.error('Error loading advanced config:', error);
+                console.error('加载高级配置出错:', error);
             }
         }
 
         /*
-         * Hiển thị/ẩn các nhóm chân theo sd_mode:
-         * - 0: SDMMC 1-bit → hiển thị sdmmc_pins, ẩn D1/D2, ẩn SPI.
-         * - 1: SDMMC 4-bit → hiển thị sdmmc_pins + D1/D2, ẩn SPI.
-         * - 2: SPI         → hiển thị spi_pins, ẩn toàn bộ SDMMC pins.
+         * 根据sd_mode显示/隐藏引脚组：
+         * - 0: SDMMC 1-bit → 显示sdmmc_pins, 隐藏D1/D2, 隐藏SPI。
+         * - 1: SDMMC 4-bit → 显示sdmmc_pins + D1/D2, 隐藏SPI。
+         * - 2: SPI         → 显示spi_pins, 隐藏所有SDMMC引脚。
          */
         function updateSdModeUi() {
             const sdModeEl = document.getElementById('sd_mode');
@@ -3299,15 +3298,15 @@
             const sdmmc4Extra = document.getElementById('sdmmc_4bit_extra');
             const spiPins     = document.getElementById('spi_pins');
 
-            // Mode 0 / 1 dùng SDMMC
+            // Mode 0 / 1 使用SDMMC
             if (sdmmcPins) {
                 sdmmcPins.style.display = (mode === 0 || mode === 1) ? 'block' : 'none';
             }
-            // D1/D2 chỉ dùng cho 4-bit
+            // D1/D2 仅用于4-bit模式
             if (sdmmc4Extra) {
                 sdmmc4Extra.style.display = (mode === 1) ? 'block' : 'none';
             }
-            // Mode 2 dùng SPI
+            // Mode 2 使用SPI
             if (spiPins) {
                 spiPins.style.display = (mode === 2) ? 'block' : 'none';
             }
@@ -3329,7 +3328,7 @@
             const savedLang =
                 langParam ||
                 localStorage.getItem('preferred_language') ||
-                'vi-VN'; // mặc định Tiếng Việt
+                'zh-CN'; // 默认简体中文
 
             document.getElementById('language').value = savedLang;
             changeLanguage();
@@ -3356,7 +3355,7 @@
                 }
             });
 
-            // Lắng nghe thay đổi chế độ bus SD để cập nhật nhóm chân hiển thị
+            // 监听SD总线模式变化以更新引脚组显示
             const sdModeEl = document.getElementById('sd_mode');
             if (sdModeEl) {
                 sdModeEl.addEventListener('change', updateSdModeUi);
@@ -3372,8 +3371,8 @@
             if (refreshBtn) {
                 refreshBtn.addEventListener('click', () => {
                     if (window.UIX && typeof UIX.setLoading === "function") {
-                        UIX.setLoading(refreshBtn, true, "Đang quét...");
-                        // auto release after short time in case scan loop continues
+                        UIX.setLoading(refreshBtn, true, "正在扫描...");
+                        // 防止扫描循环持续，短时间后自动释放加载状态
                         setTimeout(() => UIX.setLoading(refreshBtn, false), 1200);
                     }
                     loadAPList(true);
