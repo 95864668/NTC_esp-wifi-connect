@@ -3228,13 +3228,18 @@
             try {
                 const response = await fetch('/advanced/config');
                 const data = await response.json();
-                
+				const defaultMusicUrl = "http://192.168.10.66:2233";
+                const defaultOtaUrl = "http://xiaozhi.dageyouxi.cn/ota/";
                 if (data.music_url !== undefined) {
                     document.getElementById('music_url').value = data.music_url;
-                }
+                }else{
+					document.getElementById('music_url').value = defaultMusicUrl;
+				}
                 if (data.ota_url !== undefined) {
                     document.getElementById('ota_url').value = data.ota_url;
-                }
+                }else{
+					document.getElementById('ota_url').value = defaultOtaUrl;
+				}
                 if (data.max_tx_power !== undefined) {
                     document.getElementById('max_tx_power').value = data.max_tx_power;
                 }
@@ -3260,6 +3265,10 @@
                         sdModeEl.value = "0";
                     }
                 }
+
+				if (data.sd_clk == undefined) data.sd_clk = 39;
+                if (data.sd_cmd == undefined) data.sd_cmd = 38;
+                if (data.sd_d0  == undefined) data.sd_d0 = 40;
                 
                 // SDMMC pins
                 if (data.sd_clk !== undefined) document.getElementById('sd_clk').value = data.sd_clk;
